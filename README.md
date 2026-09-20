@@ -1,5 +1,144 @@
 # Clause Check — Contract Clause Reviewer
 
+English · [中文](#中文)
+
+Turn a 5–20 page SaaS contract into a risk list anchored to the original text. The final call stays with a human.
+
+A small, end-to-end project that covers redlining, chunking, a bounded tool-using agent, structured output, evals for stochastic output, and tracing. All Python.
+
+```
+PDF / TXT ──▶ parse ──▶ split (regex, by clause number) ──▶ review each clause ──▶ summarise (code) ──▶ human accepts / rejects
+                                                              │
+                                        ┌─────────────────────┴─────────────────────┐
+                                        │  small bounded agent (≤ 6 steps)           │
+                                        │  lookup_playbook(topic)   read-only        │
+                                        │  get_clause(id)           read-only, x-refs│
+                                        │  propose_redline(...)     drafts only      │
+                                        │  mark_for_review(...)     unsure → human   │
+                                        │  → ClauseVerdict JSON (structured output)  │
+                                        └────────────────────────────────────────────┘
+```
+
+**Deliberately out of scope:** rewriting the contract, saying "sign / don't sign", guessing when unsure (the model flags instead).
+
+## Quick start
+
+```bash
+pip install -r requirements.txt
+cp .env.example .env        # optional
+
+# 1) offline rule mode: no model, instant, for looking at the flow and the UI
+python -m clausecheck review data/sample_contract.txt --mode mock
+
+# 2) local model (LM Studio with `qwen38` loaded on port 1234, or any OpenAI-compatible server)
+python -m clausecheck review data/sample_contract.txt --mode local
+
+# 3) Anthropic (set ANTHROPIC_API_KEY; `auto` then picks it)
+python -m clausecheck review contract.pdf --mode live
+
+# UI / API
+streamlit run app/streamlit_app.py
+uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
+```
+
+`--mode auto` (default) resolves in this order: Anthropic credentials → `live`; a local OpenAI-compatible server answering → `local`; otherwise `mock`.
+
+### Three backends, one loop
+
+| Mode | Call path | Structured output | Notes |
+|---|---|---|---|
+| live | Anthropic SDK, `claude-opus-5`, tools + `output_config.format` | JSON schema enforced server-side | The full contract sits in the system prefix with `cache_control`; reviewing 40 clauses hits the cache 39 times |
+| local | `requests` straight to `/v1/chat/completions` (LM Studio / llama.cpp / Ollama) | Tool loop first, then one final call with `response_format: json_schema` | A JSON grammar and tool calls cannot be on at the same time, so it is two phases. The system prompt carries only a clause index (number + heading); the model fetches text with `get_clause`, which cuts the prompt from ~3k to ~1k tokens. `CLAUSECHECK_LOCAL_FULL_CONTRACT=1` switches back to full text |
+| mock | No model; driven by the playbook's `red_flags` regexes | Built directly | Only for exercising the pipeline, tests and UI. Not the product |
+
+`CLAUSECHECK_FALLBACKS=1` enables Anthropic's server-side refusal fallback (beta). Off by default: a refusal is already handled as "flag, hand to a human".
+
+## Layout
+
+```
+clausecheck/
+  parse.py      pdfplumber text extraction; pages are joined BEFORE splitting so clauses spanning a page break stay whole; repeated headers/footers dropped
+  split.py      regex split by clause number; each clause carries a section_path breadcrumb and refs ("subject to Section 12" → ["12"])
+  playbook.py   the customer's position as data: 10 rules (liability cap, auto-renewal, data residency, payment, IP, confidentiality, termination, indemnity, unilateral changes, governing law)
+  tools.py      4 tools; Pydantic args → JSON Schema, one definition used for both validation and the model; a validation failure comes back as INVALID_ARGS instead of an exception; results are trimmed and carry a `truncated` marker
+  review.py     the only place a model is called: bounded tool loop + structured output; three backends share one loop
+  redline.py    anchor location: exact → whitespace-insensitive → fuzzy within one sentence (≥95) → otherwise "needs manual placement", never a guess
+  pipeline.py   the fixed workflow; summarise is code (sorting, counting, cost estimate), not a model
+  graph.py      LangGraph variant: SQLite checkpointer + interrupt(); nothing is exported without human approval
+  tracing.py    Langfuse @observe; degrades to a no-op when keys are absent
+  cli.py / api.py
+app/streamlit_app.py      risk list → open a clause → highlighted original + rationale + diff → accept/reject each → export
+data/playbook.json        the customer playbook
+data/sample_contract.txt  synthetic SaaS agreement, 15 top-level sections, with one cross-reference trap (8.1 "subject to Section 12")
+evals/                    9 labelled cases, pytest pass-rate tests, run_evals.py, promptfoo config + Python provider
+tests/                    model-free unit tests (split, anchor, tools, playbook, mock end-to-end)
+```
+
+## Evals: the output is stochastic, so measure pass rates
+
+```bash
+# run every case 5 times, print a pass-rate table, write evals/results.json;
+# exit code 1 if high-risk recall < 0.9 or any case < 0.8
+python evals/run_evals.py --runs 5 --mode local
+
+# pytest view (each case ≥ 60 %, high-risk recall ≥ 0.9)
+CLAUSECHECK_MODE=local CLAUSECHECK_EVAL_RUNS=3 python -m pytest evals -q
+
+# promptfoo (Node); the provider is a Python file, so the whole pipeline is under test, not one prompt
+npx promptfoo@latest eval -c evals/promptfooconfig.yaml && npx promptfoo@latest view
+```
+
+Assertions come in three layers:
+
+| Layer | Example | Where |
+|---|---|---|
+| Deterministic | parses into ClauseVerdict; verdict in the allowed set; a redline's anchor is found in the text; **trajectory**: reviewing 8.1 must have called `get_clause:12` | `evals/harness.py: check()` |
+| Statistical | N runs per case → pass rate; recall over must_flag + trap ≥ 0.9 | `run_evals.py` / `test_review.py` |
+| Model-graded | does the rationale quote the clause and name the specific risk (1–5 rubric) | `promptfooconfig.yaml: llm-rubric` |
+
+9 cases: 3 must-flag, 3 must-accept, 1 cross-reference trap, 1 prompt injection, 1 one-sided termination.
+
+### A real find → fix → verify
+
+The first full run with the local Qwen model flagged 3 of the first 4 clauses (2.1 access grant, 2.2 service levels, 3.1 net-30 payment), although the playbook explicitly accepts 3.1 and the other two are boilerplate with no rule at all. Re-running 3.1 alone gave accept, and the model also called `propose_redline` on a clause it accepted. The fix was in the trace and the prompt, not the model: prompt v1 listed "the playbook is silent" as a reason to flag and never said that `preferred_language` is wording for redlines rather than a checklist. Prompt v2 (`review.py: SYSTEM_INSTRUCTIONS_V2`) makes boilerplate accept by default, defines preferred_language as wording, and restricts `propose_redline` to redline verdicts; the code also drops proposals attached to accepted clauses. Both prompts are kept; switch with `--prompt v1|v2` or `CLAUSECHECK_PROMPT_VERSION`, and `run_evals.py` on each gives the before/after table.
+
+## The human is the last step: LangGraph approval flow
+
+```bash
+python -m clausecheck review data/sample_contract.txt --mode mock --graph --approve ask
+```
+
+`load → review → summarise → (any redlines?) → approve → export`. The `approve` node calls `interrupt()`; state is persisted to `data/checkpoints.sqlite` and the process may exit. `graph.pending_interrupt(thread_id)` shows the pending redlines from another process, `graph.resume(thread_id, True)` continues from the same checkpoint. After approval the located redlines are applied by code; the model does not get to re-decide.
+
+Why LangGraph was not the first choice: the pipeline is linear, so plain Python was enough. The first thing that genuinely needed a framework was "pause for approval and resume hours later from another process", which is exactly checkpointer + interrupt.
+
+## Observability
+
+With `LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY / LANGFUSE_HOST` set, `review_contract` (trace) → `review_clause` (span with clause_id, verdict, tool_calls, steps, cache hits) is reported automatically. Contract text ends up in the trace, so in production either self-host Langfuse or mask at the SDK layer.
+
+Each clause's `trace` is also written into the report JSON: steps, tool_calls, tokens, latency, stop_reason, error, prompt_version.
+
+## Two-minute summary
+
+- **Problem**: legal review is slow, but fully automatic rewriting is too risky. Goal: let a person skip 80 % of the clauses, not replace the lawyer.
+- **Architecture**: deterministic split → agent judges one clause at a time, tools can only propose → code builds the diff → a person confirms each item.
+- **Hard part**: clauses that look fine alone but are undermined elsewhere (8.1 reads as a mutual cap; Section 12 removes it for the customer). Solution: extract refs at split time, list them in the prompt, assert in the evals that `get_clause` was called.
+- **Evaluation**: each case runs 5 times and the pass rate is the number; recall on high-risk clauses beats precision.
+- **Next**: golden set from real historical redlines; hand the playbook to legal to maintain; Word tracked-changes export.
+
+Numbers to fill in from a real run rather than estimate: the pass-rate table, high-risk recall, tokens and cost per contract, cache hit ratio, local model vs Claude.
+
+## Known limitations
+
+- Only contracts with numbered headings; without numbers it raises instead of guessing (next: fall back to heading- or length-based chunking).
+- Export is a plain-text replacement, not Word tracked changes.
+- Local Qwen3.8-27B (Q3_K_M): 1–2.5 minutes per clause (3–4 calls, prefill-bound), about 45 minutes for the 29-clause sample; Claude with a cached prefix is an order of magnitude faster.
+- Context is a budget: `local` mode gives the model an index only, so it does not see clauses it did not fetch; `live` mode gives the full text (nearly free once cached). Both trade-offs are intentional.
+
+---
+
+# 中文
+
 把一份 5–20 页的 SaaS 合同变成一张带原文定位的风险清单，最终判断留给人。
 
 这是面试冲刺计划里的 mini 项目（Day 1 晚间），一次覆盖 JD 里的 redlining、chunking、agent、tool、eval、trace 六个关键词。全 Python。
@@ -97,7 +236,7 @@ npx promptfoo@latest eval -c evals/promptfooconfig.yaml && npx promptfoo@latest 
 
 ### 一次真实的"发现 → 修复 → 验证"
 
-第一次用本地 Qwen 跑整份合同，前 4 条里 3 条被标 flag（2.1 访问授权、2.2 SLA、3.1 净 30 天付款），而 playbook 明确接受 3.1，另外两条只是没有对应规则的样板条款；单独复现 3.1 时又变成 accept，并且在 accept 的条款上"顺手"调了 `propose_redline`。看 trace 和 prompt 而不是改模型：v1 prompt 把"playbook 沉默"列为 flag 的理由，又没说清 `preferred_language` 只是 redline 用的措辞。v2 prompt（`review.py: SYSTEM_INSTRUCTIONS_V2`）把样板条款默认 accept、把 preferred_language 定义为措辞而非清单、把 propose_redline 限制在 redline 判定内；代码层同时丢弃 accept 条款上的提案。两版都保留，`--prompt v1|v2` 或 `CLAUSECHECK_PROMPT_VERSION` 切换，`run_evals.py` 各跑一遍就是对比表（见下）。
+第一次用本地 Qwen 跑整份合同，前 4 条里 3 条被标 flag（2.1 访问授权、2.2 SLA、3.1 净 30 天付款），而 playbook 明确接受 3.1，另外两条只是没有对应规则的样板条款；单独复现 3.1 时又变成 accept，并且在 accept 的条款上"顺手"调了 `propose_redline`。看 trace 和 prompt 而不是改模型：v1 prompt 把"playbook 沉默"列为 flag 的理由，又没说清 `preferred_language` 只是 redline 用的措辞。v2 prompt（`review.py: SYSTEM_INSTRUCTIONS_V2`）把样板条款默认 accept、把 preferred_language 定义为措辞而非清单、把 propose_redline 限制在 redline 判定内；代码层同时丢弃 accept 条款上的提案。两版都保留，`--prompt v1|v2` 或 `CLAUSECHECK_PROMPT_VERSION` 切换，`run_evals.py` 各跑一遍就是对比表。
 
 ## 人在最后一道：LangGraph 审批流程
 
@@ -113,7 +252,7 @@ python -m clausecheck review data/sample_contract.txt --mode mock --graph --appr
 
 配置 `LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY / LANGFUSE_HOST` 后，`review_contract`（trace）→ `review_clause`（span，带 clause_id、verdict、tool_calls、steps、cache 命中）自动上报。合同内容会进 trace，生产上要么自托管 Langfuse，要么在 SDK 层做 masking。
 
-每条审查的 `trace` 字段也直接写进报告 JSON：steps、tool_calls、tokens、latency、stop_reason、error。
+每条审查的 `trace` 字段也直接写进报告 JSON：steps、tool_calls、tokens、latency、stop_reason、error、prompt_version。
 
 ## 面试时怎么讲（两分钟版）
 
