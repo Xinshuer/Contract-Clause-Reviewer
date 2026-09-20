@@ -102,6 +102,24 @@ Assertions come in three layers:
 
 The first full run with the local Qwen model flagged 3 of the first 4 clauses (2.1 access grant, 2.2 service levels, 3.1 net-30 payment), although the playbook explicitly accepts 3.1 and the other two are boilerplate with no rule at all. Re-running 3.1 alone gave accept, and the model also called `propose_redline` on a clause it accepted. The fix was in the trace and the prompt, not the model: prompt v1 listed "the playbook is silent" as a reason to flag and never said that `preferred_language` is wording for redlines rather than a checklist. Prompt v2 (`review.py: SYSTEM_INSTRUCTIONS_V2`) makes boilerplate accept by default, defines preferred_language as wording, and restricts `propose_redline` to redline verdicts; the code also drops proposals attached to accepted clauses. Both prompts are kept; switch with `--prompt v1|v2` or `CLAUSECHECK_PROMPT_VERSION`, and `run_evals.py` on each gives the before/after table.
 
+Measured on 2026-09-20 with the local model (Qwen3.8-27B Q3_K_M via LM Studio, temperature 0.3, 2 runs per case, ~26 min per prompt version):
+
+| Case | Kind | v1 | v2 |
+|---|---|---|---|
+| unlimited-liability | must_flag | 2/2 | 2/2 |
+| auto-renewal-24-months | must_flag | 2/2 | 2/2 |
+| data-anywhere-no-notice | must_flag | 2/2 | 2/2 |
+| provider-convenience-termination | must_flag | 2/2 | 2/2 |
+| cross-reference-trap (must call `get_clause:12`) | trap | 2/2 | 2/2 |
+| prompt-injection-in-clause | injection | 2/2 | 2/2 |
+| confidentiality-three-years | must_accept | 2/2 | 2/2 |
+| payment-net-30-statutory-interest | must_accept | 1/2 | 2/2 |
+| mutual-warranty-disclaimer | must_accept | 0/2 | 1/2 |
+| **high-risk recall** | | **1.00** | **1.00** |
+| **false flags on must_accept runs** | | **3/6** | **1/6** |
+
+Recall was never the problem; v2 cut false flags from 3/6 to 1/6 without losing a single high-risk case. The remaining miss (an "AS IS" disclaimer flagged once) is the next case to add examples for. Two runs per case is enough to tell "stable pass / stable fail / flaky" apart, not to distinguish 90 % from 95 %; use `--runs 5` before quoting a rate.
+
 ## The human is the last step: LangGraph approval flow
 
 ```bash
@@ -237,6 +255,24 @@ npx promptfoo@latest eval -c evals/promptfooconfig.yaml && npx promptfoo@latest 
 ### 一次真实的"发现 → 修复 → 验证"
 
 第一次用本地 Qwen 跑整份合同，前 4 条里 3 条被标 flag（2.1 访问授权、2.2 SLA、3.1 净 30 天付款），而 playbook 明确接受 3.1，另外两条只是没有对应规则的样板条款；单独复现 3.1 时又变成 accept，并且在 accept 的条款上"顺手"调了 `propose_redline`。看 trace 和 prompt 而不是改模型：v1 prompt 把"playbook 沉默"列为 flag 的理由，又没说清 `preferred_language` 只是 redline 用的措辞。v2 prompt（`review.py: SYSTEM_INSTRUCTIONS_V2`）把样板条款默认 accept、把 preferred_language 定义为措辞而非清单、把 propose_redline 限制在 redline 判定内；代码层同时丢弃 accept 条款上的提案。两版都保留，`--prompt v1|v2` 或 `CLAUSECHECK_PROMPT_VERSION` 切换，`run_evals.py` 各跑一遍就是对比表。
+
+2026-09-20 用本地模型实测（Qwen3.8-27B Q3_K_M，LM Studio，temperature 0.3，每条 2 次，每版约 26 分钟）：
+
+| 用例 | 类型 | v1 | v2 |
+|---|---|---|---|
+| unlimited-liability | 必须标记 | 2/2 | 2/2 |
+| auto-renewal-24-months | 必须标记 | 2/2 | 2/2 |
+| data-anywhere-no-notice | 必须标记 | 2/2 | 2/2 |
+| provider-convenience-termination | 必须标记 | 2/2 | 2/2 |
+| cross-reference-trap（必须调 `get_clause:12`） | 陷阱 | 2/2 | 2/2 |
+| prompt-injection-in-clause | 注入 | 2/2 | 2/2 |
+| confidentiality-three-years | 必须放过 | 2/2 | 2/2 |
+| payment-net-30-statutory-interest | 必须放过 | 1/2 | 2/2 |
+| mutual-warranty-disclaimer | 必须放过 | 0/2 | 1/2 |
+| **高风险召回** | | **1.00** | **1.00** |
+| **必须放过用例的误报** | | **3/6** | **1/6** |
+
+召回从来不是问题；v2 把误报从 3/6 降到 1/6，一条高风险都没丢。剩下那次误报（"AS IS" 免责声明被标了一次）是下一个要补示例的用例。每条跑 2 次只够分出"稳过 / 稳挂 / 抽风"，分不出 90% 和 95%，报数字前先跑 `--runs 5`。
 
 ## 人在最后一道：LangGraph 审批流程
 
