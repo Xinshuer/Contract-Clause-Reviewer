@@ -51,7 +51,7 @@ class Settings:
     model: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_MODEL", DEFAULT_MODEL))
     mode: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_MODE", "auto"))
     effort: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_EFFORT", "medium"))
-    prompt_version: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_PROMPT_VERSION", "v2"))
+    prompt_version: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_PROMPT_VERSION", "v3"))
     max_steps: int = field(default_factory=lambda: int(os.getenv("CLAUSECHECK_MAX_STEPS", "6")))
     max_tokens: int = field(default_factory=lambda: int(os.getenv("CLAUSECHECK_MAX_TOKENS", "8192")))
     # Anthropic server-side refusal fallback (beta). Off by default; see README.
@@ -70,8 +70,8 @@ class Settings:
     def __post_init__(self) -> None:
         if self.mode not in MODES:
             raise ValueError(f"CLAUSECHECK_MODE must be one of {MODES}, got {self.mode!r}")
-        if self.prompt_version not in ("v1", "v2"):
-            raise ValueError(f"CLAUSECHECK_PROMPT_VERSION must be v1 or v2, got {self.prompt_version!r}")
+        if self.prompt_version not in ("v1", "v2", "v3"):
+            raise ValueError(f"CLAUSECHECK_PROMPT_VERSION must be v1, v2 or v3, got {self.prompt_version!r}")
         if self.mode == "auto":
             if _has_anthropic_credentials():
                 self.mode = "live"

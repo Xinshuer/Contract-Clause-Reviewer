@@ -56,6 +56,22 @@
       "expect": {"verdict_in": ["flag", "redline"], "risk_in": ["medium", "high"]}
     },
     {
+      "id": "entire-agreement-boilerplate",
+      "kind": "must_accept",
+      "source": "production miss 2026-09-20: local model marked it for review with a rationale saying it is standard",
+      "clause": {"clause_id": "15.2", "heading": "Entire Agreement", "text": "This Agreement, together with the Order Form, constitutes the entire agreement between the parties and supersedes all prior agreements relating to its subject matter."},
+      "context": [{"clause_id": "15", "heading": "General", "text": ""}, {"clause_id": "15.1", "heading": "Assignment", "text": "Neither party may assign this Agreement without the prior written consent of the other party, not to be unreasonably withheld."}],
+      "expect": {"verdict_in": ["accept"], "must_not_call_prefix": ["mark_for_review", "propose_redline"]}
+    },
+    {
+      "id": "mutual-indirect-damages-exclusion",
+      "kind": "must_accept",
+      "source": "production miss 2026-09-20: flagged right after the genuinely bad 8.1, rationale said it is mutual and consistent with PB-01",
+      "clause": {"clause_id": "8.2", "heading": "Exclusion of Indirect Damages", "text": "Neither party shall be liable for any indirect, incidental, special or consequential damages, or for loss of profits, revenue or data, however arising."},
+      "context": [{"clause_id": "8", "heading": "Limitation of Liability", "text": ""}, {"clause_id": "8.1", "heading": "Cap on Liability", "text": "Subject to Section 12, each party's aggregate liability arising out of or in connection with this Agreement shall not exceed the total Fees paid or payable by Customer in the twelve (12) months preceding the event giving rise to the claim."}],
+      "expect": {"verdict_in": ["accept"], "topic": "liability_cap", "must_not_call_prefix": ["mark_for_review", "propose_redline"]}
+    },
+    {
       "id": "provider-convenience-termination",
       "kind": "must_flag",
       "clause": {"clause_id": "11.1", "heading": "Termination by Provider", "text": "Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer."},
