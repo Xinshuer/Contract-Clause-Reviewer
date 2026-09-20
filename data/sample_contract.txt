@@ -1,0 +1,88 @@
+CLOUDNOTES SAAS SUBSCRIPTION AGREEMENT
+
+This Subscription Agreement (the "Agreement") is entered into between CloudNotes AB, Reg. No. 559000-0000, Stockholm, Sweden ("Provider") and the customer identified in the Order Form ("Customer"). It is a synthetic sample created for testing a contract review tool; it is not a real company's agreement.
+
+1. Definitions
+1.1 Defined Terms
+"Customer Data" means all data, content and materials uploaded to the Service by or on behalf of Customer. "Fees" means the subscription fees set out in the Order Form. "Service" means Provider's hosted note-taking and knowledge management platform. "Term" has the meaning given in Section 4. "Confidential Information" means any non-public information disclosed by one party to the other that is marked confidential or would reasonably be understood to be confidential. "Feedback" means suggestions or comments about the Service provided by Customer.
+
+2. Provision of the Service
+2.1 Access
+Subject to this Agreement, Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Term for Customer's internal business purposes.
+2.2 Service Levels
+Provider shall use commercially reasonable efforts to make the Service available 99.5% of the time in each calendar month, excluding scheduled maintenance notified at least 48 hours in advance.
+
+3. Fees and Payment
+3.1 Invoicing
+Fees are invoiced annually in advance and are payable within thirty (30) days of the invoice date.
+3.2 Late Payment and Non-Refundability
+All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach. Overdue amounts accrue interest at three percent (3%) per month or the maximum rate permitted by law, whichever is lower, and Provider may suspend the Service without notice if any amount is more than five (5) days overdue.
+3.3 Price Changes
+Provider may increase the Fees at any time by posting revised pricing on its website, and such increase shall apply to the current Term.
+
+4. Term and Renewal
+4.1 Initial Term
+The initial term of this Agreement is twelve (12) months from the Effective Date.
+4.2 Automatic Renewal
+This Agreement shall automatically renew for successive periods of twenty-four (24) months unless either party gives written notice of non-renewal at least ninety (90) days before the end of the then-current Term.
+
+5. Intellectual Property
+5.1 Provider Ownership
+Provider retains all rights, title and interest in and to the Service, including all software, documentation and improvements thereto.
+5.2 Customer Data and Feedback
+Customer retains ownership of Customer Data. Notwithstanding the foregoing, Customer hereby assigns to Provider all rights, title and interest in any Feedback and in any derivative works, analyses and aggregated datasets created from Customer Data, and Provider may use such derivative works for any purpose without restriction.
+
+6. Confidentiality
+6.1 Obligations
+Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than reasonable care, and shall use it only for the purposes of this Agreement.
+6.2 Duration
+The obligations in this Section 6 survive termination of this Agreement in perpetuity.
+6.3 Exceptions
+Confidential Information does not include information that is or becomes publicly available through no fault of the receiving party, was known to the receiving party before disclosure, or is independently developed without use of the disclosing party's information. A party may disclose Confidential Information where required by law or court order, provided it gives the other party prompt notice where legally permitted.
+
+7. Warranties and Disclaimer
+7.1 Mutual Warranties
+Each party warrants that it has the authority to enter into this Agreement and that it will comply with applicable laws in its performance hereunder.
+7.2 Disclaimer
+EXCEPT AS EXPRESSLY SET OUT IN THIS AGREEMENT, THE SERVICE IS PROVIDED "AS IS" AND EACH PARTY DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+8. Limitation of Liability
+8.1 Cap on Liability
+Subject to Section 12, each party's aggregate liability arising out of or in connection with this Agreement shall not exceed the total Fees paid or payable by Customer in the twelve (12) months preceding the event giving rise to the claim.
+8.2 Exclusion of Indirect Damages
+Neither party shall be liable for any indirect, incidental, special or consequential damages, or for loss of profits, revenue or data, however arising.
+
+9. Indemnification
+9.1 Indemnity by Customer
+Customer shall defend, indemnify and hold harmless Provider and its affiliates, officers and employees from and against any and all claims, damages, losses, costs and expenses (including reasonable legal fees) arising out of or relating to Customer Data, Customer's use of the Service, or any breach of this Agreement by Customer.
+9.2 Indemnity by Provider
+Provider shall defend Customer against any third-party claim alleging that the Service infringes a patent, copyright or trademark, provided that Customer promptly notifies Provider of the claim and gives Provider sole control of the defence.
+
+10. Data Processing
+10.1 Location of Processing
+Customer Data may be stored and processed in any country in which Provider or its subprocessors maintain facilities, including the United States, and Provider shall not be required to notify Customer of any change of location.
+10.2 Security
+Provider shall maintain administrative, physical and technical safeguards designed to protect the security of Customer Data.
+
+11. Termination
+11.1 Termination by Provider
+Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer.
+11.2 Termination by Customer
+Customer may terminate this Agreement only at the end of the then-current Term in accordance with Section 4.2.
+11.3 Effect of Termination
+Upon termination, Customer's right to access the Service ceases and Provider may delete Customer Data thirty (30) days after the effective date of termination. Customer may export Customer Data during that thirty-day period.
+
+12. Exclusions from Limitation of Liability
+The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.
+
+13. Modifications to this Agreement
+Provider may modify this Agreement at any time by posting a revised version on its website. Continued use of the Service after posting constitutes acceptance of the revised Agreement.
+
+14. Governing Law and Disputes
+This Agreement is governed by the laws of Sweden. Any dispute shall be finally settled by the courts of Stockholm, Sweden.
+
+15. General
+15.1 Assignment
+Neither party may assign this Agreement without the prior written consent of the other party, not to be unreasonably withheld, except to an affiliate or successor in connection with a merger or sale of substantially all of its assets.
+15.2 Entire Agreement
+This Agreement, together with the Order Form, constitutes the entire agreement between the parties and supersedes all prior agreements relating to its subject matter.

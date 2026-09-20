@@ -1,0 +1,126 @@
+{
+  "customer": "Small studio / freelancer buying SaaS, established in Sweden",
+  "version": "2026-09-20",
+  "rules": [
+    {
+      "id": "PB-01",
+      "topic": "liability_cap",
+      "title": "Mutual liability cap",
+      "position": "Each party's aggregate liability is capped at 100% of the fees paid in the 12 months preceding the claim. The cap must be mutual and must not be undermined by carve-outs that apply only to the Customer.",
+      "fallback_positions": ["Cap of 150% of annual fees if the counterparty insists", "Unlimited liability only for wilful misconduct, gross negligence, and IP infringement by either party"],
+      "never_accept": ["Unlimited liability for the Customer", "A cap that protects only the Provider", "Carve-outs that remove the cap for the Customer's indemnity or ordinary breach while keeping it for the Provider"],
+      "severity": "high",
+      "preferred_language": "Each party's aggregate liability arising out of or in connection with this Agreement shall not exceed the total Fees paid or payable by Customer in the twelve (12) months preceding the event giving rise to the claim. This limitation applies equally to both parties and to all claims, including indemnification obligations, except for liability arising from wilful misconduct, gross negligence, or infringement of the other party's intellectual property rights.",
+      "keywords": ["liability", "liable", "aggregate", "limitation"],
+      "red_flags": ["unlimited", "shall not apply to (the )?customer", "sole(ly)? liable", "only (the )?provider'?s? liability", "customer'?s? liability (shall|is) (be )?unlimited"]
+    },
+    {
+      "id": "PB-02",
+      "topic": "auto_renewal",
+      "title": "Renewal terms and notice",
+      "position": "Renewal periods no longer than the initial term and never longer than 12 months. Non-renewal notice of at most 30 days before the end of the term.",
+      "fallback_positions": ["Notice period of up to 60 days if the renewal period is 12 months or shorter"],
+      "never_accept": ["Renewal periods longer than 12 months", "Notice periods longer than 60 days", "Renewal with a price increase not disclosed before the notice deadline"],
+      "severity": "medium",
+      "preferred_language": "This Agreement shall automatically renew for successive periods of twelve (12) months unless either party gives written notice of non-renewal at least thirty (30) days before the end of the then-current Term.",
+      "keywords": ["renew", "renewal", "successive"],
+      "red_flags": ["(eighteen|twenty-four|twenty four|thirty-six|thirty six|24|36) \\(?\\d*\\)? ?months", "(ninety|one hundred twenty|90|120) \\(?\\d*\\)? ?days"]
+    },
+    {
+      "id": "PB-03",
+      "topic": "data_processing",
+      "title": "Data location and DPA",
+      "position": "Customer Data is stored and processed within the EU/EEA. Transfers outside the EU/EEA only under a data processing agreement with standard contractual clauses, with prior written notice of new subprocessors and a right to object.",
+      "fallback_positions": ["Processing in an adequacy-decision country with a DPA in place", "US processing under the EU-US Data Privacy Framework with a DPA and 30 days' notice of subprocessor changes"],
+      "never_accept": ["Processing in any country at Provider's discretion", "No obligation to notify subprocessor or location changes", "No DPA"],
+      "severity": "high",
+      "preferred_language": "Customer Data shall be stored and processed within the European Economic Area. Provider shall not transfer Customer Data outside the EEA without Customer's prior written consent and a data processing agreement incorporating the EU standard contractual clauses, and shall give Customer at least thirty (30) days' written notice of any new subprocessor or change of processing location, during which Customer may object.",
+      "keywords": ["customer data may", "processed", "stored", "subprocessor", "personal data", "data processing", "location of processing"],
+      "red_flags": ["any country", "including the united states", "shall not be required to notify", "without notice to customer"]
+    },
+    {
+      "id": "PB-04",
+      "topic": "payment",
+      "title": "Payment terms, late fees, refunds",
+      "position": "Net 30 payment terms. Late interest at the statutory rate under the Swedish Interest Act or at most 1.5% per month. Suspension only after 30 days overdue and written notice. Prepaid fees refunded pro rata if Customer terminates for Provider's breach. No price changes during a committed term.",
+      "fallback_positions": ["Net 14 with late interest at 1.5% per month", "Price increases of at most 5% per year, notified 60 days before renewal"],
+      "never_accept": ["Fees non-refundable even where Provider is in breach", "Suspension without notice", "Price changes taking effect during the current term", "Interest above 2% per month"],
+      "severity": "medium",
+      "preferred_language": "Fees are payable within thirty (30) days of the invoice date. Overdue amounts accrue interest in accordance with the Swedish Interest Act (1975:635). Provider may suspend the Service only if an undisputed amount remains unpaid thirty (30) days after written notice. If Customer terminates this Agreement for Provider's material breach, Provider shall refund any prepaid Fees for the remainder of the Term on a pro rata basis. Fees are fixed for the duration of each Term.",
+      "keywords": ["fees", "invoice", "payment", "payable", "refund", "pricing"],
+      "red_flags": ["non-refundable under any circumstances", "without notice", "three percent", "3%", "(four|five|six) percent", "at any time by posting", "apply to the current term"]
+    },
+    {
+      "id": "PB-05",
+      "topic": "ip_ownership",
+      "title": "Ownership of Customer Data and derivatives",
+      "position": "Customer owns Customer Data and everything derived from it, including aggregated or anonymised datasets. Provider receives only a licence to host and process Customer Data to provide the Service. Feedback may be licensed to Provider non-exclusively, never assigned.",
+      "fallback_positions": ["Provider may use fully anonymised, aggregated statistics that cannot identify Customer, for improving the Service only"],
+      "never_accept": ["Assignment of derivative works of Customer Data to Provider", "Use of Customer Data for any purpose", "Assignment of Feedback"],
+      "severity": "high",
+      "preferred_language": "Customer retains all rights, title and interest in Customer Data, including any derivative works, analyses and datasets created from it. Provider may use Customer Data solely to provide the Service. Customer grants Provider a non-exclusive, royalty-free licence to use any Feedback for the purpose of improving the Service.",
+      "keywords": ["intellectual property", "ownership", "assigns", "rights, title", "derivative", "feedback", "retains"],
+      "red_flags": ["assigns to provider all rights", "derivative works", "for any purpose without restriction", "hereby assigns"]
+    },
+    {
+      "id": "PB-06",
+      "topic": "confidentiality",
+      "title": "Confidentiality term and scope",
+      "position": "Mutual confidentiality obligations lasting 3 years after termination; trade secrets protected for as long as they remain trade secrets. Standard exceptions (public, already known, independently developed, legally required disclosure).",
+      "fallback_positions": ["5 years after termination"],
+      "never_accept": ["Perpetual confidentiality for all information (unclear and hard to enforce under Swedish law)", "One-sided obligations", "No exception for legally required disclosure"],
+      "severity": "medium",
+      "preferred_language": "The obligations in this Section 6 survive for three (3) years after termination of this Agreement, except that trade secrets shall be protected for as long as they remain trade secrets under applicable law.",
+      "keywords": ["confidential", "confidentiality", "non-public"],
+      "red_flags": ["in perpetuity", "perpetual", "indefinitely", "survive termination of this agreement forever"]
+    },
+    {
+      "id": "PB-07",
+      "topic": "termination",
+      "title": "Termination rights and data export",
+      "position": "Either both parties may terminate for convenience with equal notice of at least 60 days, or neither may. Either party may terminate for material breach after a 30-day cure period. Customer may export Customer Data for at least 30 days after termination.",
+      "fallback_positions": ["Provider convenience termination with at least 90 days' notice and a pro rata refund"],
+      "never_accept": ["Provider may terminate for convenience on short notice while Customer is locked in for the term", "Suspension or termination without notice", "Data deleted immediately on termination"],
+      "severity": "high",
+      "preferred_language": "Either party may terminate this Agreement for convenience upon sixty (60) days' written notice, in which case Provider shall refund any prepaid Fees for the unexpired part of the Term on a pro rata basis. Either party may terminate this Agreement if the other party materially breaches it and fails to cure the breach within thirty (30) days of written notice.",
+      "keywords": ["terminat", "suspend the service at any time", "convenience"],
+      "red_flags": ["for convenience upon (ten|five|seven|fourteen|10|5|7|14)", "at any time for convenience", "only at the end of the then-current term", "delete customer data immediately"]
+    },
+    {
+      "id": "PB-08",
+      "topic": "indemnification",
+      "title": "Scope of indemnities",
+      "position": "Customer indemnifies only for third-party claims caused by Customer Data that is unlawful or infringes third-party rights, or by Customer's breach of applicable law. Provider indemnifies for IP infringement by the Service. Both indemnities are subject to the liability cap except for IP infringement.",
+      "fallback_positions": ["Customer indemnity also covers Customer's material breach of the acceptable use policy"],
+      "never_accept": ["Customer indemnifies for 'any use of the Service' or 'any breach of this Agreement'", "Customer indemnity excluded from the liability cap while Provider's is not", "Provider IP indemnity conditioned on Provider having 'sole control' with no Customer participation right"],
+      "severity": "high",
+      "preferred_language": "Customer shall defend and indemnify Provider against third-party claims to the extent arising from Customer Data that infringes a third party's intellectual property rights or violates applicable law. Provider shall defend and indemnify Customer against third-party claims alleging that the Service infringes a third party's intellectual property rights. Each party's indemnification obligations are subject to Section 8, except for claims of intellectual property infringement.",
+      "keywords": ["indemnif", "hold harmless", "defend"],
+      "red_flags": ["any and all claims", "any breach of this agreement by customer", "customer'?s? use of the service, or"]
+    },
+    {
+      "id": "PB-09",
+      "topic": "unilateral_changes",
+      "title": "Changes to the agreement",
+      "position": "The Agreement may only be changed in writing signed by both parties. Provider may update the Service documentation and acceptable use policy with 30 days' notice provided the changes do not materially reduce the Service.",
+      "fallback_positions": ["Provider may change the terms with 60 days' written notice and Customer may terminate with a pro rata refund if it objects"],
+      "never_accept": ["Changes by posting on a website", "Changes effective on continued use", "Changes applying to the current committed term without a termination right"],
+      "severity": "medium",
+      "preferred_language": "This Agreement may be amended only by a written instrument signed by both parties. Provider may update its documentation and acceptable use policy on thirty (30) days' written notice, provided that no such update materially degrades the Service or Customer's rights.",
+      "keywords": ["modify this agreement", "revised version", "posting", "continued use", "amend"],
+      "red_flags": ["by posting", "continued use of the service after posting", "at any time by posting a revised"]
+    },
+    {
+      "id": "PB-10",
+      "topic": "governing_law",
+      "title": "Governing law and forum",
+      "position": "Swedish law with the courts of Stockholm or SCC arbitration. Any EU/EEA member state law is acceptable.",
+      "fallback_positions": ["English law with London courts", "Any other EU/EEA jurisdiction"],
+      "never_accept": ["Mandatory arbitration outside the EU/EEA with costs borne by Customer", "Waiver of mandatory consumer or data-protection rights"],
+      "severity": "low",
+      "preferred_language": "This Agreement is governed by the laws of Sweden. Any dispute shall be finally settled by the courts of Stockholm, Sweden.",
+      "keywords": ["governed by", "governing law", "courts of", "jurisdiction", "arbitration"],
+      "red_flags": ["laws of the state of (delaware|california|new york|texas)", "courts (located )?in (delaware|california|new york|texas|singapore)", "binding arbitration in"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+anthropic>=1.7
+pydantic>=2.7
+pdfplumber>=0.11
+rapidfuzz>=3.9
+numpy>=1.26
+requests>=2.31
+python-dotenv>=1.0
+langgraph>=1.0
+langgraph-checkpoint-sqlite>=3.0
+langfuse>=3.0
+streamlit>=1.40
+fastapi>=0.115
+uvicorn>=0.30
+python-multipart>=0.0.9
+pytest>=8.0

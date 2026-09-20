@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+data/checkpoints.sqlite*
+data/*.report.json
+data/*.redlined.txt
+evals/results.json
+*.report.json
+.promptfoo/
+node_modules/
+.streamlit/
+data/local_run.log
+data/_runner.py
+evals/results*.json
+data/*.log

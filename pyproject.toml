@@ -1,0 +1,10 @@
+[project]
+name = "clausecheck"
+version = "0.1.0"
+description = "Contract Clause Reviewer - per-clause review against a playbook, human decides"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "evals"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]

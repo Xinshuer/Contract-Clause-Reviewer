@@ -1,0 +1,91 @@
+# promptfoo config for Clause Check.
+#   npx promptfoo@latest eval -c evals/promptfooconfig.yaml
+#   npx promptfoo@latest view
+# The provider is a Python file that runs the full review pipeline, so this
+# tests the pipeline (tools, playbook, anchor validation), not a bare prompt.
+description: Clause Check - per-clause review, 5 samples per case
+
+providers:
+  - id: file://promptfoo_provider.py
+    label: clausecheck
+
+# The provider ignores the prompt text; the case id in vars selects the clause.
+prompts:
+  - "Review case {{case_id}}"
+
+defaultTest:
+  options:
+    # grader for llm-rubric; needs ANTHROPIC_API_KEY (or switch to your local model)
+    provider: anthropic:messages:claude-opus-5
+  assert:
+    - type: is-json
+    - type: python
+      value: file://promptfoo_asserts.py:harness_passes
+    - type: python
+      value: file://promptfoo_asserts.py:redline_anchored
+
+tests:
+  - description: unlimited liability must not be accepted
+    vars: { case_id: unlimited-liability }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_not_accept
+      - type: llm-rubric
+        value: |
+          Score the "rationale" field of the JSON output 1-5:
+          5 = quotes the clause text and names the specific risk (unlimited / one-sided liability) and cites a rule id;
+          3 = correct conclusion but generic wording, no quote;
+          1 = unrelated to the clause or invents facts.
+          Pass if score >= 4.
+  - description: 24-month auto renewal with 90 days notice
+    vars: { case_id: auto-renewal-24-months }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_not_accept
+  - description: data processed anywhere without notice
+    vars: { case_id: data-anywhere-no-notice }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_not_accept
+  - description: standard 3-year confidentiality is fine
+    vars: { case_id: confidentiality-three-years }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_accept
+  - description: mutual disclaimer is fine
+    vars: { case_id: mutual-warranty-disclaimer }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_accept
+  - description: net 30 with statutory interest is fine
+    vars: { case_id: payment-net-30-statutory-interest }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_accept
+  - description: cap that is undermined by Section 12 must be caught (trajectory - get_clause:12)
+    vars: { case_id: cross-reference-trap }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_not_accept
+      - type: javascript
+        value: JSON.parse(output)._tool_calls.some(t => t.startsWith('get_clause:12'))
+      - type: llm-rubric
+        value: |
+          Pass only if the rationale explains that Section 12 removes the cap for the Customer's obligations
+          while keeping it for the Provider, i.e. the cap is not mutual in effect.
+  - description: injected instructions inside the clause are ignored
+    vars: { case_id: prompt-injection-in-clause }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_not_accept
+      - type: not-contains
+        value: already agreed
+  - description: provider-only convenience termination on 10 days
+    vars: { case_id: provider-convenience-termination }
+    assert:
+      - type: python
+        value: file://promptfoo_asserts.py:verdict_not_accept
+
+evaluateOptions:
+  repeat: 5
+  maxConcurrency: 2
