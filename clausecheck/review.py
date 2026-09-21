@@ -108,7 +108,7 @@ def review_clause(contract: Contract, clause: Clause, playbook: Playbook, settin
     settings = settings or Settings()
     if settings.mock:
         return rule_based_review(contract, clause, playbook, settings)
-    backend = OpenAICompatBackend(settings, contract) if settings.mode == "local" else AnthropicBackend(settings, contract)
+    backend = OpenAICompatBackend(settings, contract) if settings.compat else AnthropicBackend(settings, contract)
     return model_review(backend, contract, clause, playbook, settings)
 
 
@@ -187,15 +187,17 @@ class AnthropicBackend:
 
 
 class OpenAICompatBackend:
-    """LM Studio / llama.cpp server / Ollama via /v1/chat/completions (requests, no SDK)."""
+    """DeepSeek / LM Studio / llama.cpp server / Ollama via /v1/chat/completions (requests, no SDK)."""
 
     def __init__(self, settings: Settings, contract: Contract):
         import requests
 
         self.requests = requests
         self.settings = settings
-        self.url = f"{settings.local_base_url.rstrip('/')}/chat/completions"
-        block = _contract_block(contract) if settings.local_full_contract else _contract_index(contract)
+        self.url = f"{settings.compat_base_url.rstrip('/')}/chat/completions"
+        self.headers = {"Authorization": f"Bearer {settings.compat_api_key}"} if settings.compat_api_key else {}
+        block = _contract_block(contract) if settings.full_contract else _contract_index(contract)
+        # stable content first (instructions, contract) so hosted prefix caches hit
         self.system = PROMPTS[settings.prompt_version] + "\n\n" + block
         self.tools = [{"type": "function", "function": {"name": t["name"], "description": t["description"], "parameters": t["input_schema"]}} for t in TOOLS]
 
@@ -203,24 +205,39 @@ class OpenAICompatBackend:
         body = {
             "model": self.settings.model,
             "messages": [{"role": "system", "content": self.system}, *messages],
-            "temperature": self.settings.local_temperature,
-            "max_tokens": self.settings.local_max_tokens,
+            "temperature": self.settings.compat_temperature,
+            "max_tokens": self.settings.compat_max_tokens,
             **extra,
         }
-        r = self.requests.post(self.url, json=body, timeout=600)
-        r.raise_for_status()
+        r = self.requests.post(self.url, json=body, headers=self.headers, timeout=600)
+        if r.status_code >= 400:
+            raise RuntimeError(f"HTTP {r.status_code} from {self.url}: {r.text[:300]}")
         return r.json()
 
     @staticmethod
     def _usage(d: dict) -> dict:
         u = d.get("usage") or {}
-        return {"input": u.get("prompt_tokens", 0), "output": u.get("completion_tokens", 0), "cache_read": 0, "cache_write": 0}
+        prompt = u.get("prompt_tokens", 0) or 0
+        # DeepSeek reports prefix-cache hits; LM Studio does not (all counted as input)
+        hit = u.get("prompt_cache_hit_tokens", 0) or 0
+        miss = u.get("prompt_cache_miss_tokens")
+        return {
+            "input": miss if miss is not None else prompt - hit,
+            "output": u.get("completion_tokens", 0) or 0,
+            "cache_read": hit,
+            "cache_write": 0,
+        }
+
+    def _response_format(self) -> dict:
+        if self.settings.compat_json_mode == "json_schema":
+            return {"type": "json_schema", "json_schema": {"name": "ClauseVerdict", "strict": True, "schema": OUTPUT_SCHEMA}}
+        return {"type": "json_object"}
 
     def step(self, messages: list) -> Step:
         try:
             d = self._post(messages, tools=self.tools, tool_choice="auto")
         except Exception as e:  # requests errors, bad JSON
-            return Step(stop="error", error=f"local_server_error: {e}")
+            return Step(stop="error", error=f"api_error: {e}")
         m = d["choices"][0]["message"]
         assistant = {k: v for k, v in m.items() if k in ("role", "content", "tool_calls")}
         assistant["content"] = THINK_TAGS.sub("", assistant.get("content") or "")
@@ -244,14 +261,15 @@ class OpenAICompatBackend:
     def request_json(self, messages: list, step: Step, problem: str) -> Step:
         """Final call: no tools, grammar-constrained to the ClauseVerdict schema."""
         messages.append(step.assistant_message)
-        messages.append({"role": "user", "content": "Now return the ClauseVerdict JSON object for this clause and nothing else."})
+        ask = "Now return the ClauseVerdict JSON object for this clause and nothing else."
+        if self.settings.compat_json_mode != "json_schema":
+            # json_object mode only guarantees valid JSON; the schema has to be in the prompt
+            ask += " It must match this JSON schema exactly:\n" + json.dumps(OUTPUT_SCHEMA)
+        messages.append({"role": "user", "content": ask})
         try:
-            d = self._post(
-                messages,
-                response_format={"type": "json_schema", "json_schema": {"name": "ClauseVerdict", "strict": True, "schema": OUTPUT_SCHEMA}},
-            )
+            d = self._post(messages, response_format=self._response_format())
         except Exception as e:
-            return Step(stop="error", error=f"local_server_error: {e}")
+            return Step(stop="error", error=f"api_error: {e}")
         m = d["choices"][0]["message"]
         text = THINK_TAGS.sub("", m.get("content") or "")
         return Step(stop="end", text=text, assistant_message={"role": "assistant", "content": text}, usage=self._usage(d))

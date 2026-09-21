@@ -30,10 +30,13 @@ cp .env.example .env        # optional
 # 1) offline rule mode: no model, instant, for looking at the flow and the UI
 python -m clausecheck review data/sample_contract.txt --mode mock
 
-# 2) local model (LM Studio with `qwen38` loaded on port 1234, or any OpenAI-compatible server)
+# 2) DeepSeek (put DEEPSEEK_API_KEY in .env; cheap, fast, prefix cache)
+python -m clausecheck review data/sample_contract.txt --mode deepseek
+
+# 3) local model (LM Studio with `qwen38` loaded on port 1234, or any OpenAI-compatible server)
 python -m clausecheck review data/sample_contract.txt --mode local
 
-# 3) Anthropic (set ANTHROPIC_API_KEY; `auto` then picks it)
+# 4) Anthropic (set ANTHROPIC_API_KEY; `auto` then picks it)
 python -m clausecheck review contract.pdf --mode live
 
 # UI / API
@@ -41,14 +44,17 @@ streamlit run app/streamlit_app.py
 uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 ```
 
-`--mode auto` (default) resolves in this order: Anthropic credentials → `live`; a local OpenAI-compatible server answering → `local`; otherwise `mock`.
+`--mode auto` (default) resolves in this order: Anthropic credentials → `live`; `DEEPSEEK_API_KEY` set → `deepseek`; a local OpenAI-compatible server answering → `local`; otherwise `mock`.
 
-### Three backends, one loop
+**Learning this project?** Start with [learn/README.md](learn/README.md): eight short hands-on lessons on debugging and checking an LLM app, built on this codebase.
+
+### Four backends, one loop
 
 | Mode | Call path | Structured output | Notes |
 |---|---|---|---|
 | live | Anthropic SDK, `claude-opus-5`, tools + `output_config.format` | JSON schema enforced server-side | The full contract sits in the system prefix with `cache_control`; reviewing 40 clauses hits the cache 39 times |
-| local | `requests` straight to `/v1/chat/completions` (LM Studio / llama.cpp / Ollama) | Tool loop first, then one final call with `response_format: json_schema` | A JSON grammar and tool calls cannot be on at the same time, so it is two phases. The system prompt carries only a clause index (number + heading); the model fetches text with `get_clause`, which cuts the prompt from ~3k to ~1k tokens. `CLAUSECHECK_LOCAL_FULL_CONTRACT=1` switches back to full text |
+| deepseek | `requests` to DeepSeek's OpenAI-compatible `/v1/chat/completions`, `deepseek-chat` | Tool loop first, then one final call with `response_format: json_object` and the schema in the prompt | Full contract in the system prompt; DeepSeek's automatic prefix cache reports `prompt_cache_hit_tokens`, which the report shows as `cache_read`. Same backend class as `local` |
+| local | `requests` straight to `/v1/chat/completions` (LM Studio / llama.cpp / Ollama) | Tool loop first, then one final call with `response_format: json_schema` | A JSON grammar and tool calls cannot be on at the same time, so it is two phases. The system prompt carries only a clause index (number + heading); the model fetches text with `get_clause`, which cuts the prompt from ~3k to ~1k tokens. `CLAUSECHECK_FULL_CONTRACT=1` switches to full text |
 | mock | No model; driven by the playbook's `red_flags` regexes | Built directly | Only for exercising the pipeline, tests and UI. Not the product |
 
 `CLAUSECHECK_FALLBACKS=1` enables Anthropic's server-side refusal fallback (beta). Off by default: a refusal is already handled as "flag, hand to a human".
@@ -185,10 +191,13 @@ cp .env.example .env        # 按需填写
 # 1) 离线规则模式（不调模型，秒出结果，用来看流程和界面）
 python -m clausecheck review data/sample_contract.txt --mode mock
 
-# 2) 本地模型（LM Studio 已加载 qwen38，端口 1234）
+# 2) DeepSeek（.env 里填 DEEPSEEK_API_KEY；便宜、快、有前缀缓存）
+python -m clausecheck review data/sample_contract.txt --mode deepseek
+
+# 3) 本地模型（LM Studio 已加载 qwen38，端口 1234）
 python -m clausecheck review data/sample_contract.txt --mode local
 
-# 3) Anthropic（设置 ANTHROPIC_API_KEY 后 auto 会自动选它）
+# 4) Anthropic（设置 ANTHROPIC_API_KEY 后 auto 会自动选它）
 python -m clausecheck review contract.pdf --mode live
 
 # 界面 / 接口
@@ -196,14 +205,17 @@ streamlit run app/streamlit_app.py
 uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 ```
 
-`--mode auto`（默认）的顺序：有 Anthropic 凭据 → live；本地 OpenAI 兼容服务在线 → local；否则 mock。
+`--mode auto`（默认）的顺序：有 Anthropic 凭据 → live；有 `DEEPSEEK_API_KEY` → deepseek；本地 OpenAI 兼容服务在线 → local；否则 mock。
 
-### 三种后端
+**第一次上手？** 从 [learn/README.md](learn/README.md) 开始：八节动手小课，讲怎么排错、怎么检查一个 LLM 应用，全部在这个代码库上做。
+
+### 四种后端，一个循环
 
 | 模式 | 调用方式 | 结构化输出 | 备注 |
 |---|---|---|---|
 | live | Anthropic SDK，`claude-opus-5`，tools + `output_config.format` | 服务端强制 JSON schema | 合同全文放在 system 前缀并打 `cache_control`，逐条审查时 39/40 次命中缓存 |
-| local | `requests` 直连 `/v1/chat/completions`（LM Studio / llama.cpp / Ollama） | 先跑工具循环，最后一次调用用 `response_format: json_schema` | JSON 语法约束和 tool call 不能同时开，所以拆成两段。system 里只放条款索引（编号 + 标题），模型用 get_clause 按需取，prompt 从 3k 降到 1k token；`CLAUSECHECK_LOCAL_FULL_CONTRACT=1` 可切回全文 |
+| deepseek | `requests` 直连 DeepSeek 的 OpenAI 兼容接口，`deepseek-chat` | 先工具循环，最后一次用 `response_format: json_object` + schema 写在 prompt 里 | 合同全文进 system；DeepSeek 自动前缀缓存的 `prompt_cache_hit_tokens` 在报告里显示为 `cache_read`。和 local 共用一个后端类 |
+| local | `requests` 直连 `/v1/chat/completions`（LM Studio / llama.cpp / Ollama） | 先跑工具循环，最后一次调用用 `response_format: json_schema` | JSON 语法约束和 tool call 不能同时开，所以拆成两段。system 里只放条款索引（编号 + 标题），模型用 get_clause 按需取，prompt 从 3k 降到 1k token；`CLAUSECHECK_FULL_CONTRACT=1` 可切回全文 |
 | mock | 不调模型，playbook 里的 `red_flags` 正则驱动 | 直接构造 | 只用于跑通流程、测试、UI；不是产品 |
 
 `CLAUSECHECK_FALLBACKS=1` 可打开 Anthropic 的服务端拒答回退（beta）。默认关闭，因为拒答在本项目里已经按"标 flag 交给人"处理。

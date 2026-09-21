@@ -36,7 +36,8 @@ st.caption("Deterministic split -> per-clause review against the playbook -> you
 with st.sidebar:
     st.header("Run")
     default_settings = Settings()
-    mode = st.selectbox("Mode", ["auto", "live", "local", "mock"], index=["auto", "live", "local", "mock"].index(default_settings.mode if default_settings.mode in ("live", "local", "mock") else "auto"))
+    modes = ["auto", "live", "deepseek", "local", "mock"]
+    mode = st.selectbox("Mode", modes, index=modes.index(default_settings.mode if default_settings.mode in modes else "auto"))
     src = st.radio("Contract", ["Sample SaaS agreement", "Upload"], horizontal=True)
     upload = st.file_uploader("PDF or TXT", type=["pdf", "txt", "md"]) if src == "Upload" else None
     run = st.button("Review", type="primary", use_container_width=True)

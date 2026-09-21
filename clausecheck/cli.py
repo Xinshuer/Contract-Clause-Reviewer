@@ -90,7 +90,7 @@ def main(argv: list[str] | None = None) -> int:
     r = sub.add_parser("review", help="review every clause of a contract")
     r.add_argument("path")
     r.add_argument("--out", help="report JSON path")
-    r.add_argument("--mode", choices=["auto", "live", "mock"], help="override CLAUSECHECK_MODE")
+    r.add_argument("--mode", choices=["auto", "live", "deepseek", "local", "mock"], help="override CLAUSECHECK_MODE")
     r.add_argument("--graph", action="store_true", help="run via the LangGraph workflow with an approval interrupt")
     r.add_argument("--approve", choices=["ask", "yes", "no"], default="ask", help="how to answer the interrupt (graph mode)")
     r.add_argument("--thread", default="cli-1", help="checkpoint thread id (graph mode)")

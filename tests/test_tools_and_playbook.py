@@ -64,3 +64,27 @@ def test_propose_redline_locates_or_reports():
     })
     assert err and json.loads(bad)["error"] == "ANCHOR_NOT_FOUND"
     assert len(ctx.proposals) == 1 and ctx.proposals[0].located is False  # latest replaces
+
+
+def test_deepseek_mode_resolves_compat_fields(monkeypatch):
+    from clausecheck.config import Settings
+
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "sk-test")
+    s = Settings(mode="deepseek")
+    assert s.model == "deepseek-chat" and s.compat and s.compat_json_mode == "json_object"
+    assert s.compat_base_url.startswith("https://api.deepseek.com") and s.compat_api_key == "sk-test"
+    assert s.full_contract is True and s.price()["cache_read"] < s.price()["input"]
+    monkeypatch.delenv("DEEPSEEK_API_KEY")
+    import pytest
+
+    with pytest.raises(ValueError):
+        Settings(mode="deepseek", deepseek_api_key="")
+
+
+def test_compat_usage_maps_deepseek_cache_fields():
+    from clausecheck.review import OpenAICompatBackend
+
+    u = OpenAICompatBackend._usage({"usage": {"prompt_tokens": 1000, "completion_tokens": 50, "prompt_cache_hit_tokens": 900, "prompt_cache_miss_tokens": 100}})
+    assert u == {"input": 100, "output": 50, "cache_read": 900, "cache_write": 0}
+    u = OpenAICompatBackend._usage({"usage": {"prompt_tokens": 1000, "completion_tokens": 50}})
+    assert u["input"] == 1000 and u["cache_read"] == 0

@@ -1,0 +1,1479 @@
+{
+  "contract_name": "sample_contract",
+  "generated_at": "2026-09-20T20:31:03+00:00",
+  "model": "qwen38",
+  "mode": "local",
+  "summary": {
+    "clauses_reviewed": 29,
+    "counts": {
+      "accept": 9,
+      "flag": 8,
+      "redline": 12
+    },
+    "needs_attention": [
+      "10.1",
+      "11.1",
+      "11.2",
+      "12",
+      "5.2",
+      "9.1",
+      "9.2",
+      "8.1",
+      "13",
+      "3.2",
+      "3.3",
+      "4.2",
+      "6.2",
+      "10.2",
+      "11.3",
+      "15.2",
+      "5.1",
+      "6.1",
+      "6.3",
+      "8.2"
+    ],
+    "high_risk": [
+      "5.2",
+      "8.1",
+      "9.1",
+      "9.2",
+      "10.1",
+      "11.1",
+      "11.2",
+      "12"
+    ],
+    "low_confidence": [
+      "5.1",
+      "6.1",
+      "6.3",
+      "8.2",
+      "10.2",
+      "11.3",
+      "15.2"
+    ],
+    "clauses_skipped_by_reader": 0.31,
+    "tokens": {
+      "input": 269967,
+      "output": 41974,
+      "cache_read": 0,
+      "cache_write": 0
+    },
+    "estimated_cost_usd": 0.0,
+    "cache_hit_ratio": 0.0,
+    "total_latency_ms": 2447206,
+    "errors": []
+  },
+  "reviews": [
+    {
+      "clause": {
+        "clause_id": "1.1",
+        "heading": "Defined Terms",
+        "text": "\"Customer Data\" means all data, content and materials uploaded to the Service by or on behalf of Customer. \"Fees\" means the subscription fees set out in the Order Form. \"Service\" means Provider's hosted note-taking and knowledge management platform. \"Term\" has the meaning given in Section 4. \"Confidential Information\" means any non-public information disclosed by one party to the other that is marked confidential or would reasonably be understood to be confidential. \"Feedback\" means suggestions or comments about the Service provided by Customer.",
+        "section_path": "1 Definitions > 1.1 Defined Terms",
+        "refs": [
+          "4"
+        ],
+        "char_start": 378,
+        "char_end": 932
+      },
+      "verdict": {
+        "clause_id": "1.1",
+        "topic": "other",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "Clause 1.1 is a standard definitions section with no applicable playbook rule (topic 'other' has no rules). Each term is neutral or mutual: \"Customer Data\" means data uploaded by/on behalf of Customer; \"Fees\" are the subscription fees in the Order Form; \"Service\" describes Provider's platform; and \"Confidential Information\" is defined mutually as information disclosed by one party to the other. The cross-reference for \"Term\" points to Section 4 (verified: 12-month initial term with auto-renewal), whose substance belongs to clause 4.2 rather than this definitions clause, so it does not make 1.1 one-sided. No never-accept rule applies; acceptable as boilerplate.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": [
+          "4"
+        ]
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:other",
+          "get_clause:4",
+          "propose_redline:INVALID_ARGS"
+        ],
+        "input_tokens": 8330,
+        "output_tokens": 1807,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 112277,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "2.1",
+        "heading": "Access",
+        "text": "Subject to this Agreement, Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Term for Customer's internal business purposes.",
+        "section_path": "2 Provision of the Service > 2.1 Access",
+        "refs": [],
+        "char_start": 970,
+        "char_end": 1152
+      },
+      "verdict": {
+        "clause_id": "2.1",
+        "topic": "other",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "Clause 2.1 grants Customer a 'non-exclusive, non-transferable right to access and use the Service during the Term for Customer's internal business purposes.' This is ordinary SaaS license boilerplate: it is limited to the Term, scoped to internal business use, and subject to the rest of the Agreement (which governs fees, data processing, IP, etc.). No playbook rule specifically addresses an access grant, and nothing in the clause is one-sided or unusual. No cross-references were detected that could undermine it.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 6,
+        "tool_calls": [
+          "lookup_playbook:other",
+          "lookup_playbook:ip_ownership",
+          "lookup_playbook:payment",
+          "lookup_playbook:other"
+        ],
+        "input_tokens": 13529,
+        "output_tokens": 1484,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 91801,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "2.2",
+        "heading": "Service Levels",
+        "text": "Provider shall use commercially reasonable efforts to make the Service available 99.5% of the time in each calendar month, excluding scheduled maintenance notified at least 48 hours in advance.",
+        "section_path": "2 Provision of the Service > 2.2 Service Levels",
+        "refs": [],
+        "char_start": 1170,
+        "char_end": 1366
+      },
+      "verdict": {
+        "clause_id": "2.2",
+        "topic": "other",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "Clause states 'Provider shall use commercially reasonable efforts to make the Service available 99.5% of the time in each calendar month, excluding scheduled maintenance notified at least 48 hours in advance.' This is a standard service-level commitment; the playbook has no rule for service levels (lookup_playbook returned no rules), and the wording is balanced and not one-sided, so it is acceptable as ordinary boilerplate.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:other",
+          "lookup_playbook:INVALID_ARGS"
+        ],
+        "input_tokens": 7319,
+        "output_tokens": 756,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 43771,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "3.1",
+        "heading": "Invoicing",
+        "text": "Fees are invoiced annually in advance and are payable within thirty (30) days of the invoice date.",
+        "section_path": "3 Fees and Payment > 3.1 Invoicing",
+        "refs": [],
+        "char_start": 1399,
+        "char_end": 1499
+      },
+      "verdict": {
+        "clause_id": "3.1",
+        "topic": "payment",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-04"
+        ],
+        "rationale": "Clause 3.1 provides for annual prepayment with Net 30 terms ('payable within thirty (30) days of the invoice date'), which matches the playbook's primary position under PB-04 ('Net 30 payment terms'). No never_accept items are triggered: no non-refundability, suspension, interest rate, or mid-term price change language appears. Annual prepayment is standard SaaS practice and not contradicted by any rule.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:payment",
+          "lookup_playbook:other"
+        ],
+        "input_tokens": 8068,
+        "output_tokens": 1264,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 74784,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "3.2",
+        "heading": "Late Payment and Non-Refundability",
+        "text": "All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach. Overdue amounts accrue interest at three percent (3%) per month or the maximum rate permitted by law, whichever is lower, and Provider may suspend the Service without notice if any amount is more than five (5) days overdue.",
+        "section_path": "3 Fees and Payment > 3.2 Late Payment and Non-Refundability",
+        "refs": [],
+        "char_start": 1537,
+        "char_end": 1889
+      },
+      "verdict": {
+        "clause_id": "3.2",
+        "topic": "payment",
+        "verdict": "redline",
+        "risk_level": "medium",
+        "rule_ids": [
+          "PB-04"
+        ],
+        "rationale": "Clause 3.2 conflicts with playbook rule PB-04 (Payment terms, late fees, refunds) on three points: (1) 'All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach' matches the never_accept item 'Fees non-refundable even where Provider is in breach'; (2) interest of 3% per month exceeds both the position cap ('at most 1.5% per month') and the never_accept threshold ('Interest above 2% per month'); (3) 'Provider may suspend the Service without notice if any amount is more than five (5) days overdue' conflicts with the position requiring suspension only after 30 days overdue and written notice, and matches the never_accept item 'Suspension without notice'. A redline was proposed using PB-04's preferred_language: Net 30 payment terms, interest per the Swedish Interest Act, suspension only after 30 days of unpaid undisputed amount following written notice, and pro rata refund of prepaid Fees if Customer terminates for Provider's material breach.",
+        "confidence": "high",
+        "anchor_text": "All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach. Overdue amounts accrue interest at three percent (3%) per month or the maximum rate permitted by law, whichever is lower, and Provider may suspend the Service without notice if any amount is more than five (5) days overdue.",
+        "replacement": "All Fees are payable within thirty (30) days of the invoice date. Overdue amounts accrue interest in accordance with the Swedish Interest Act (1975:635). Provider may suspend the Service only if an undisputed amount remains unpaid thirty (30) days after written notice to Customer. If Customer terminates this Agreement for Provider's material breach, Provider shall refund any prepaid Fees for the remainder of the Term on a pro rata basis.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "3.2",
+        "anchor_text": "All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach. Overdue amounts accrue interest at three percent (3%) per month or the maximum rate permitted by law, whichever is lower, and Provider may suspend the Service without notice if any amount is more than five (5) days overdue.",
+        "replacement": "All Fees are payable within thirty (30) days of the invoice date. Overdue amounts accrue interest in accordance with the Swedish Interest Act (1975:635). Provider may suspend the Service only if an undisputed amount remains unpaid thirty (30) days after written notice to Customer. If Customer terminates this Agreement for Provider's material breach, Provider shall refund any prepaid Fees for the remainder of the Term on a pro rata basis.",
+        "rationale": "Clause 3.2 conflicts with playbook rule PB-04 (payment): (1) \"All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach\" is on the never_accept list (\"Fees non-refundable even where Provider is in breach\"); (2) interest of 3% per month exceeds the position cap of at most 1.5% per month and the never_accept threshold of 2% per month; (3) \"Provider may suspend the Service without notice if any amount is more than five (5) days overdue\" conflicts with the position requiring suspension only after 30 days overdue and written notice, and matches the never_accept item \"Suspension without notice\". Replacement uses PB-04 preferred_language.",
+        "located": true,
+        "start": 0,
+        "end": 350,
+        "matched_text": "All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach. Overdue amounts accrue interest at three percent (3%) per month or the maximum rate permitted by law, whichever is lower, and Provider may suspend the Service without notice if any amount is more than five (5) days overdue.",
+        "diff": "--- clause 3.2 (original)\n+++ clause 3.2 (proposed)\n@@ -1 +1 @@\n-All Fees are non-refundable under any circumstances, including where Customer terminates this Agreement for Provider's breach. Overdue amounts accrue interest at three percent (3%) per month or the maximum rate permitted by law, whichever is lower, and Provider may suspend the Service without notice if any amount is more than five (5) days overdue.\n+All Fees are payable within thirty (30) days of the invoice date. Overdue amounts accrue interest in accordance with the Swedish Interest Act (1975:635). Provider may suspend the Service only if an undisputed amount remains unpaid thirty (30) days after written notice to Customer. If Customer terminates this Agreement for Provider's material breach, Provider shall refund any prepaid Fees for the remainder of the Term on a pro rata basis."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:payment",
+          "propose_redline"
+        ],
+        "input_tokens": 9258,
+        "output_tokens": 2275,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 121669,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "3.3",
+        "heading": "Price Changes",
+        "text": "Provider may increase the Fees at any time by posting revised pricing on its website, and such increase shall apply to the current Term.",
+        "section_path": "3 Fees and Payment > 3.3 Price Changes",
+        "refs": [],
+        "char_start": 1906,
+        "char_end": 2045
+      },
+      "verdict": {
+        "clause_id": "3.3",
+        "topic": "payment",
+        "verdict": "redline",
+        "risk_level": "medium",
+        "rule_ids": [
+          "PB-04"
+        ],
+        "rationale": "Clause states: \"Provider may increase the Fees at any time by posting revised pricing on its website, and such increase shall apply to the current Term.\" This conflicts with playbook rule PB-04 (payment), whose position is \"No price changes during a committed term\" and whose never_accept list includes \"Price changes taking effect during the current term.\" The clause also lacks any written notice requirement or cap on the increase. A redline has been proposed aligning with the fallback position: fees fixed for each Term, increases of at most 5% per year permitted only upon renewal, with at least 60 days' prior written notice.",
+        "confidence": "high",
+        "anchor_text": "Provider may increase the Fees at any time by posting revised pricing on its website, and such increase shall apply to the current Term.",
+        "replacement": "Fees are fixed for the duration of each Term. Provider may increase the Fees upon renewal, provided that (a) the increase does not exceed five percent (5%) per year, and (b) Provider gives Customer written notice at least sixty (60) days before the end of the then-current Term.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "3.3",
+        "anchor_text": "Provider may increase the Fees at any time by posting revised pricing on its website, and such increase shall apply to the current Term.",
+        "replacement": "Fees are fixed for the duration of each Term. Provider may increase the Fees upon renewal, provided that (a) the increase does not exceed five percent (5%) per year, and (b) Provider gives Customer written notice at least sixty (60) days before the end of the then-current Term.",
+        "rationale": "The clause permits price increases during the current term via website posting only, which directly conflicts with playbook rule PB-04's position (\"No price changes during a committed term\") and its never_accept item \"Price changes taking effect during the current term.\" The redline aligns with the fallback position: up to 5% annual increase with 60 days' written notice before renewal.",
+        "located": true,
+        "start": 0,
+        "end": 136,
+        "matched_text": "Provider may increase the Fees at any time by posting revised pricing on its website, and such increase shall apply to the current Term.",
+        "diff": "--- clause 3.3 (original)\n+++ clause 3.3 (proposed)\n@@ -1 +1 @@\n-Provider may increase the Fees at any time by posting revised pricing on its website, and such increase shall apply to the current Term.\n+Fees are fixed for the duration of each Term. Provider may increase the Fees upon renewal, provided that (a) the increase does not exceed five percent (5%) per year, and (b) Provider gives Customer written notice at least sixty (60) days before the end of the then-current Term."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:payment",
+          "propose_redline"
+        ],
+        "input_tokens": 8475,
+        "output_tokens": 1478,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 79999,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "4.1",
+        "heading": "Initial Term",
+        "text": "The initial term of this Agreement is twelve (12) months from the Effective Date.",
+        "section_path": "4 Term and Renewal > 4.1 Initial Term",
+        "refs": [],
+        "char_start": 2081,
+        "char_end": 2164
+      },
+      "verdict": {
+        "clause_id": "4.1",
+        "topic": "auto_renewal",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-02"
+        ],
+        "rationale": "The clause states 'The initial term of this Agreement is twelve (12) months from the Effective Date.' This 12-month initial term is consistent with playbook rule PB-02, which requires renewal periods no longer than 12 months. No never_accept items apply and there are no cross-references to check. The clause is standard SaaS boilerplate for an initial term.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 5,
+        "tool_calls": [
+          "lookup_playbook:auto_renewal",
+          "lookup_playbook:termination",
+          "propose_redline"
+        ],
+        "input_tokens": 10769,
+        "output_tokens": 1334,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 79888,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "4.2",
+        "heading": "Automatic Renewal",
+        "text": "This Agreement shall automatically renew for successive periods of twenty-four (24) months unless either party gives written notice of non-renewal at least ninety (90) days before the end of the then-current Term.",
+        "section_path": "4 Term and Renewal > 4.2 Automatic Renewal",
+        "refs": [],
+        "char_start": 2185,
+        "char_end": 2401
+      },
+      "verdict": {
+        "clause_id": "4.2",
+        "topic": "auto_renewal",
+        "verdict": "redline",
+        "risk_level": "medium",
+        "rule_ids": [
+          "PB-02"
+        ],
+        "rationale": "Clause 4.2 states: 'This Agreement shall automatically renew for successive periods of twenty-four (24) months unless either party gives written notice of non-renewal at least ninety (90) days before the end of the then-current Term.' The 24-month renewal period exceeds the playbook's never-accept threshold of 12 months, and the 90-day notice period exceeds the 60-day maximum under rule PB-02. Both elements conflict with the Customer's position.",
+        "confidence": "high",
+        "anchor_text": "This Agreement shall automatically renew for successive periods of twenty-four (24) months unless either party gives written notice of non-renewal at least ninety (90) days before the end of the then-current Term.",
+        "replacement": "This Agreement shall automatically renew for successive periods of twelve (12) months unless either party gives written notice of non-renewal at least thirty (30) days before the end of the then-current Term.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "4.2",
+        "anchor_text": "This Agreement shall automatically renew for successive periods of twenty-four (24) months unless either party gives written notice of non-renewal at least ninety (90) days before the end of the then-current Term.",
+        "replacement": "This Agreement shall automatically renew for successive periods of twelve (12) months unless either party gives written notice of non-renewal at least thirty (30) days before the end of the then-current Term.",
+        "rationale": "The 24-month renewal period exceeds the playbook's never-accept threshold of 12 months, and the 90-day notice exceeds the 60-day maximum (PB-02). Replacing with a 12-month renewal term and 30-day notice aligns with the Customer's preferred language.",
+        "located": true,
+        "start": 0,
+        "end": 213,
+        "matched_text": "This Agreement shall automatically renew for successive periods of twenty-four (24) months unless either party gives written notice of non-renewal at least ninety (90) days before the end of the then-current Term.",
+        "diff": "--- clause 4.2 (original)\n+++ clause 4.2 (proposed)\n@@ -1 +1 @@\n-This Agreement shall automatically renew for successive periods of twenty-four (24) months unless either party gives written notice of non-renewal at least ninety (90) days before the end of the then-current Term.\n+This Agreement shall automatically renew for successive periods of twelve (12) months unless either party gives written notice of non-renewal at least thirty (30) days before the end of the then-current Term."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:auto_renewal",
+          "propose_redline"
+        ],
+        "input_tokens": 8199,
+        "output_tokens": 1032,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 56295,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "5.1",
+        "heading": "Provider Ownership",
+        "text": "Provider retains all rights, title and interest in and to the Service, including all software, documentation and improvements thereto.",
+        "section_path": "5 Intellectual Property > 5.1 Provider Ownership",
+        "refs": [],
+        "char_start": 2448,
+        "char_end": 2584
+      },
+      "verdict": {
+        "clause_id": "5.1",
+        "topic": "ip_ownership",
+        "verdict": "flag",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-05"
+        ],
+        "rationale": "Clause states: \"Provider retains all rights, title and interest in and to the Service, including all software, documentation and improvements thereto.\" Playbook rule PB-05 (ip_ownership) governs ownership of Customer Data and Feedback only; this clause concerns Provider's own Service IP and does not touch Customer Data or Feedback, so it is ordinary SaaS boilerplate. No cross-references detected. Marked for human review to confirm that \"improvements thereto\" should be read as improvements to the Service (not to Customer Data).",
+        "confidence": "low",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 5,
+        "tool_calls": [
+          "lookup_playbook:ip_ownership",
+          "mark_for_review",
+          "mark_for_review"
+        ],
+        "input_tokens": 10148,
+        "output_tokens": 1137,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 70343,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "5.2",
+        "heading": "Customer Data and Feedback",
+        "text": "Customer retains ownership of Customer Data. Notwithstanding the foregoing, Customer hereby assigns to Provider all rights, title and interest in any Feedback and in any derivative works, analyses and aggregated datasets created from Customer Data, and Provider may use such derivative works for any purpose without restriction.",
+        "section_path": "5 Intellectual Property > 5.2 Customer Data and Feedback",
+        "refs": [],
+        "char_start": 2614,
+        "char_end": 2945
+      },
+      "verdict": {
+        "clause_id": "5.2",
+        "topic": "ip_ownership",
+        "verdict": "redline",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-05"
+        ],
+        "rationale": "Clause 5.2 states: 'Customer hereby assigns to Provider all rights, title and interest in any Feedback and in any derivative works, analyses and aggregated datasets created from Customer Data, and Provider may use such derivative works for any purpose without restriction.' This conflicts with playbook rule PB-05 (ip_ownership), which requires that Customer owns everything derived from Customer Data including aggregated datasets, that Provider receives only a licence to host/process the data for the Service, and that Feedback be licensed non-exclusively but never assigned. The clause's assignment of derivative works and 'any purpose without restriction' language fall within PB-05's never_accept list.",
+        "confidence": "high",
+        "anchor_text": "Notwithstanding the foregoing, Customer hereby assigns to Provider all rights, title and interest in any Feedback and in any derivative works, analyses and aggregated datasets created from Customer Data, and Provider may use such derivative works for any purpose without restriction.",
+        "replacement": "Customer retains all rights, title and interest in Customer Data, including any derivative works, analyses and datasets created from it. Provider may use Customer Data solely to provide the Service. Customer grants Provider a non-exclusive, royalty-free licence to use any Feedback for the purpose of improving the Service.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "5.2",
+        "anchor_text": "Notwithstanding the foregoing, Customer hereby assigns to Provider all rights, title and interest in any Feedback and in any derivative works, analyses and aggregated datasets created from Customer Data, and Provider may use such derivative works for any purpose without restriction.",
+        "replacement": "Customer retains all rights, title and interest in Customer Data, including any derivative works, analyses and datasets created from it. Provider may use Customer Data solely to provide the Service. Customer grants Provider a non-exclusive, royalty-free licence to use any Feedback for the purpose of improving the Service.",
+        "rationale": "Clause 5.2 assigns all rights in Feedback and in derivative works/analyses/aggregated datasets created from Customer Data to Provider with unrestricted use. This conflicts with PB-05, which requires Customer to own everything derived from Customer Data (including aggregated datasets), grants Provider only a licence to host/process the data for the Service, and provides that Feedback may be licensed non-exclusively but never assigned. The \"any purpose without restriction\" language also falls within the playbook's never_accept list.",
+        "located": true,
+        "start": 45,
+        "end": 328,
+        "matched_text": "Notwithstanding the foregoing, Customer hereby assigns to Provider all rights, title and interest in any Feedback and in any derivative works, analyses and aggregated datasets created from Customer Data, and Provider may use such derivative works for any purpose without restriction.",
+        "diff": "--- clause 5.2 (original)\n+++ clause 5.2 (proposed)\n@@ -1 +1 @@\n-Customer retains ownership of Customer Data. Notwithstanding the foregoing, Customer hereby assigns to Provider all rights, title and interest in any Feedback and in any derivative works, analyses and aggregated datasets created from Customer Data, and Provider may use such derivative works for any purpose without restriction.\n+Customer retains ownership of Customer Data. Customer retains all rights, title and interest in Customer Data, including any derivative works, analyses and datasets created from it. Provider may use Customer Data solely to provide the Service. Customer grants Provider a non-exclusive, royalty-free licence to use any Feedback for the purpose of improving the Service."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:ip_ownership",
+          "propose_redline"
+        ],
+        "input_tokens": 8319,
+        "output_tokens": 1211,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 65189,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "6.1",
+        "heading": "Obligations",
+        "text": "Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than reasonable care, and shall use it only for the purposes of this Agreement.",
+        "section_path": "6 Confidentiality > 6.1 Obligations",
+        "refs": [],
+        "char_start": 2979,
+        "char_end": 3252
+      },
+      "verdict": {
+        "clause_id": "6.1",
+        "topic": "confidentiality",
+        "verdict": "flag",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-06"
+        ],
+        "rationale": "Clause 6.1 imposes mutual confidentiality obligations ('Each party shall protect the other party's Confidential Information') with a standard of care of 'at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than reasonable care,' limited to use for purposes of this Agreement. This aligns with PB-06 (mutual obligations; acceptable standard of care). No never_accept items apply: the obligation is mutual (not one-sided), not perpetual, and duration/exceptions are addressed in separate sub-clauses 6.2 and 6.3.",
+        "confidence": "low",
+        "anchor_text": "Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than reasonable care, and shall use it only for the purposes of this Agreement.",
+        "replacement": "Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than a reasonable degree of care, and shall use it only for the purposes of this Agreement.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "6.1",
+        "anchor_text": "Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than reasonable care, and shall use it only for the purposes of this Agreement.",
+        "replacement": "Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than a reasonable degree of care, and shall use it only for the purposes of this Agreement.",
+        "rationale": "Minor clarification: \"reasonable care\" → \"a reasonable degree of care\" to align with standard drafting conventions. However, this is not required by the playbook; the clause as written is acceptable.",
+        "located": true,
+        "start": 0,
+        "end": 271,
+        "matched_text": "Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than reasonable care, and shall use it only for the purposes of this Agreement.",
+        "diff": "--- clause 6.1 (original)\n+++ clause 6.1 (proposed)\n@@ -1 +1 @@\n-Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than reasonable care, and shall use it only for the purposes of this Agreement.\n+Each party shall protect the other party's Confidential Information using at least the same degree of care it uses for its own confidential information of similar nature, and in no event less than a reasonable degree of care, and shall use it only for the purposes of this Agreement."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 6,
+        "tool_calls": [
+          "lookup_playbook:confidentiality",
+          "propose_redline",
+          "mark_for_review",
+          "mark_for_review"
+        ],
+        "input_tokens": 14114,
+        "output_tokens": 2439,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 143972,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "6.2",
+        "heading": "Duration",
+        "text": "The obligations in this Section 6 survive termination of this Agreement in perpetuity.",
+        "section_path": "6 Confidentiality > 6.2 Duration",
+        "refs": [],
+        "char_start": 3264,
+        "char_end": 3352
+      },
+      "verdict": {
+        "clause_id": "6.2",
+        "topic": "confidentiality",
+        "verdict": "redline",
+        "risk_level": "medium",
+        "rule_ids": [
+          "PB-06"
+        ],
+        "rationale": "Clause 6.2 states that confidentiality obligations 'survive termination of this Agreement in perpetuity.' Rule PB-06 lists perpetual confidentiality for all information as a never_accept item (unclear and hard to enforce under Swedish law). The playbook position requires a 3-year post-termination survival period, with trade secrets protected for as long as they remain trade secrets. Proposed redline uses the playbook's preferred language.",
+        "confidence": "high",
+        "anchor_text": "The obligations in this Section 6 survive termination of this Agreement in perpetuity.",
+        "replacement": "The obligations in this Section 6 survive for three (3) years after termination of this Agreement, except that trade secrets shall be protected for as long as they remain trade secrets under applicable law.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "6.2",
+        "anchor_text": "The obligations in this Section 6 survive termination of this Agreement in perpetuity.",
+        "replacement": "The obligations in this Section 6 survive for three (3) years after termination of this Agreement, except that trade secrets shall be protected for as long as they remain trade secrets under applicable law.",
+        "rationale": "Clause 6.2 provides that confidentiality obligations survive \"in perpetuity\", which is listed in the never_accept list of rule PB-06 (perpetual confidentiality for all information, unclear and hard to enforce). The playbook position calls for a 3-year post-termination survival period with trade secrets protected as long as they remain trade secrets. Proposed redline uses the playbook's preferred language.",
+        "located": true,
+        "start": 0,
+        "end": 86,
+        "matched_text": "The obligations in this Section 6 survive termination of this Agreement in perpetuity.",
+        "diff": "--- clause 6.2 (original)\n+++ clause 6.2 (proposed)\n@@ -1 +1 @@\n-The obligations in this Section 6 survive termination of this Agreement in perpetuity.\n+The obligations in this Section 6 survive for three (3) years after termination of this Agreement, except that trade secrets shall be protected for as long as they remain trade secrets under applicable law."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:confidentiality",
+          "propose_redline"
+        ],
+        "input_tokens": 7902,
+        "output_tokens": 915,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 49785,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "6.3",
+        "heading": "Exceptions",
+        "text": "Confidential Information does not include information that is or becomes publicly available through no fault of the receiving party, was known to the receiving party before disclosure, or is independently developed without use of the disclosing party's information. A party may disclose Confidential Information where required by law or court order, provided it gives the other party prompt notice where legally permitted.",
+        "section_path": "6 Confidentiality > 6.3 Exceptions",
+        "refs": [],
+        "char_start": 3366,
+        "char_end": 3791
+      },
+      "verdict": {
+        "clause_id": "6.3",
+        "topic": "confidentiality",
+        "verdict": "flag",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-06"
+        ],
+        "rationale": "Clause 6.3 enumerates the standard exceptions: 'information that is or becomes publicly available through no fault of the receiving party, was known to the receiving party before disclosure, or is independently developed without use of the disclosing party's information,' plus a legally-required-disclosure carve-out with prompt notice ('A party may disclose Confidential Information where required by law or court order, provided it gives the other party prompt notice where legally permitted'). These match PB-06's stated position that 'Standard exceptions (public, already known, independently developed, legally required disclosure)' are acceptable. The clause is mutual in form and no never_accept items apply.",
+        "confidence": "low",
+        "anchor_text": "placeholder",
+        "replacement": "placeholder",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "6.3",
+        "anchor_text": "placeholder",
+        "replacement": "placeholder",
+        "rationale": "Not needed - clause is acceptable as written per PB-06 standard exceptions list.",
+        "located": false,
+        "start": null,
+        "end": null,
+        "matched_text": null,
+        "diff": ""
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 5,
+        "tool_calls": [
+          "lookup_playbook:confidentiality",
+          "propose_redline",
+          "mark_for_review"
+        ],
+        "input_tokens": 10577,
+        "output_tokens": 1476,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 89032,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "7.1",
+        "heading": "Mutual Warranties",
+        "text": "Each party warrants that it has the authority to enter into this Agreement and that it will comply with applicable laws in its performance hereunder.",
+        "section_path": "7 Warranties and Disclaimer > 7.1 Mutual Warranties",
+        "refs": [],
+        "char_start": 3841,
+        "char_end": 3992
+      },
+      "verdict": {
+        "clause_id": "7.1",
+        "topic": "other",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "Clause 7.1 states: 'Each party warrants that it has the authority to enter into this Agreement and that it will comply with applicable laws in its performance hereunder.' This is standard mutual boilerplate — both parties give identical warranties of authority and legal compliance, so nothing is one-sided or unusual. The playbook topic 'other' has no specific rule (rules: []), there are no cross-references to check, and no never-accept items apply. Acceptable as ordinary warranty language.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 5,
+        "tool_calls": [
+          "lookup_playbook:other",
+          "lookup_playbook:other",
+          "lookup_playbook:other"
+        ],
+        "input_tokens": 9624,
+        "output_tokens": 885,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 56919,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "7.2",
+        "heading": "Disclaimer",
+        "text": "EXCEPT AS EXPRESSLY SET OUT IN THIS AGREEMENT, THE SERVICE IS PROVIDED \"AS IS\" AND EACH PARTY DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.",
+        "section_path": "7 Warranties and Disclaimer > 7.2 Disclaimer",
+        "refs": [],
+        "char_start": 4006,
+        "char_end": 4232
+      },
+      "verdict": {
+        "clause_id": "7.2",
+        "topic": "other",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "The clause provides: 'EACH PARTY DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.' It is a mutual disclaimer applying to both parties, preserves the express terms of the agreement, and follows standard SaaS boilerplate. No playbook rule governs warranty disclaimers (topic 'other' returned no rules), and no never-accept conditions are triggered. Acceptable as ordinary boilerplate.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 3,
+        "tool_calls": [
+          "lookup_playbook:other"
+        ],
+        "input_tokens": 5150,
+        "output_tokens": 928,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 57601,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "8.1",
+        "heading": "Cap on Liability",
+        "text": "Subject to Section 12, each party's aggregate liability arising out of or in connection with this Agreement shall not exceed the total Fees paid or payable by Customer in the twelve (12) months preceding the event giving rise to the claim.",
+        "section_path": "8 Limitation of Liability > 8.1 Cap on Liability",
+        "refs": [
+          "12"
+        ],
+        "char_start": 4279,
+        "char_end": 4520
+      },
+      "verdict": {
+        "clause_id": "8.1",
+        "topic": "liability_cap",
+        "verdict": "flag",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-01"
+        ],
+        "rationale": "Clause 8.1 on its face matches PB-01: 'each party's aggregate liability ... shall not exceed the total Fees paid or payable by Customer in the twelve (12) months preceding the event giving rise to the claim' — a mutual cap at 100% of trailing 12-month fees, which is the playbook position. However, the clause opens with 'Subject to Section 12,' and Section 12 states: 'The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.' This asymmetric carve-out removes the cap for Customer's payment, indemnity, and ordinary breaches (Sections 2 and 6) while expressly preserving it for all of Provider's liabilities — matching PB-01's never_accept item: 'Carve-outs that remove the cap for the Customer's indemnity or ordinary breach while keeping it for the Provider.' Flagged because the fix likely belongs in Section 12 (or jointly across both clauses), so a human should review them together before deciding on redline wording.",
+        "confidence": "medium",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": [
+          "12"
+        ]
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:liability_cap",
+          "get_clause:12",
+          "mark_for_review"
+        ],
+        "input_tokens": 8925,
+        "output_tokens": 2865,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 162104,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "8.2",
+        "heading": "Exclusion of Indirect Damages",
+        "text": "Neither party shall be liable for any indirect, incidental, special or consequential damages, or for loss of profits, revenue or data, however arising.",
+        "section_path": "8 Limitation of Liability > 8.2 Exclusion of Indirect Damages",
+        "refs": [],
+        "char_start": 4553,
+        "char_end": 4707
+      },
+      "verdict": {
+        "clause_id": "8.2",
+        "topic": "liability_cap",
+        "verdict": "flag",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-01"
+        ],
+        "rationale": "Clause 8.2 provides: 'Neither party shall be liable for any indirect, incidental, special or consequential damages, or for loss of profits, revenue or data, however arising.' The exclusion is mutual (applies to both parties), which is consistent with PB-01's requirement that the liability framework be mutual and not one-sided. It is standard SaaS boilerplate; no never_accept rule under PB-01 applies, and there are no cross-references that could undermine it. No concrete fix is needed.",
+        "confidence": "low",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:liability_cap",
+          "mark_for_review"
+        ],
+        "input_tokens": 7903,
+        "output_tokens": 1202,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 80133,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "9.1",
+        "heading": "Indemnity by Customer",
+        "text": "Customer shall defend, indemnify and hold harmless Provider and its affiliates, officers and employees from and against any and all claims, damages, losses, costs and expenses (including reasonable legal fees) arising out of or relating to Customer Data, Customer's use of the Service, or any breach of this Agreement by Customer.",
+        "section_path": "9 Indemnification > 9.1 Indemnity by Customer",
+        "refs": [],
+        "char_start": 4751,
+        "char_end": 5083
+      },
+      "verdict": {
+        "clause_id": "9.1",
+        "topic": "indemnification",
+        "verdict": "redline",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-08"
+        ],
+        "rationale": "Clause 9.1 provides that Customer 'shall defend, indemnify and hold harmless Provider ... arising out of or relating to Customer Data, Customer's use of the Service, or any breach of this Agreement by Customer.' This conflicts with playbook rule PB-08 never_accept list ('Customer indemnifies for \"any use of the Service\" or \"any breach of this Agreement\"') because the clause covers both triggers and is not limited to third-party claims. The redline narrows scope to third-party claims arising from Customer Data that infringes a third party's intellectual property rights or violates applicable law, consistent with PB-08 preferred_language.",
+        "confidence": "high",
+        "anchor_text": "Customer shall defend, indemnify and hold harmless Provider and its affiliates, officers and employees from and against any and all claims, damages, losses, costs and expenses (including reasonable legal fees) arising out of or relating to Customer Data, Customer's use of the Service, or any breach of this Agreement by Customer.",
+        "replacement": "Customer shall defend and indemnify Provider against third-party claims to the extent arising from Customer Data that infringes a third party's intellectual property rights or violates applicable law.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "9.1",
+        "anchor_text": "Customer shall defend, indemnify and hold harmless Provider and its affiliates, officers and employees from and against any and all claims, damages, losses, costs and expenses (including reasonable legal fees) arising out of or relating to Customer Data, Customer's use of the Service, or any breach of this Agreement by Customer.",
+        "replacement": "Customer shall defend and indemnify Provider against third-party claims to the extent arising from Customer Data that infringes a third party's intellectual property rights or violates applicable law.",
+        "rationale": "Playbook PB-08 never_accept: \"Customer indemnifies for 'any use of the Service' or 'any breach of this Agreement'\". The clause covers both, and is not limited to third-party claims. Replacement aligns with preferred_language.",
+        "located": true,
+        "start": 0,
+        "end": 330,
+        "matched_text": "Customer shall defend, indemnify and hold harmless Provider and its affiliates, officers and employees from and against any and all claims, damages, losses, costs and expenses (including reasonable legal fees) arising out of or relating to Customer Data, Customer's use of the Service, or any breach of this Agreement by Customer.",
+        "diff": "--- clause 9.1 (original)\n+++ clause 9.1 (proposed)\n@@ -1 +1 @@\n-Customer shall defend, indemnify and hold harmless Provider and its affiliates, officers and employees from and against any and all claims, damages, losses, costs and expenses (including reasonable legal fees) arising out of or relating to Customer Data, Customer's use of the Service, or any breach of this Agreement by Customer.\n+Customer shall defend and indemnify Provider against third-party claims to the extent arising from Customer Data that infringes a third party's intellectual property rights or violates applicable law."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:indemnification",
+          "propose_redline"
+        ],
+        "input_tokens": 8497,
+        "output_tokens": 1628,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 88879,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "9.2",
+        "heading": "Indemnity by Provider",
+        "text": "Provider shall defend Customer against any third-party claim alleging that the Service infringes a patent, copyright or trademark, provided that Customer promptly notifies Provider of the claim and gives Provider sole control of the defence.",
+        "section_path": "9 Indemnification > 9.2 Indemnity by Provider",
+        "refs": [],
+        "char_start": 5108,
+        "char_end": 5352
+      },
+      "verdict": {
+        "clause_id": "9.2",
+        "topic": "indemnification",
+        "verdict": "redline",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-08"
+        ],
+        "rationale": "Clause 9.2 states: 'Provider shall defend Customer against any third-party claim alleging that the Service infringes a patent, copyright or trademark, provided that Customer promptly notifies Provider of the claim and gives Provider sole control of the defence.' Under PB-08 (never_accept), the Provider IP indemnity must not be conditioned on Provider having 'sole control' with no Customer participation right. Here, giving Provider 'sole control of the defence' is a condition precedent to the indemnity, leaving Customer without any participation right — a direct conflict. Additionally, the clause only obliges Provider to 'defend' rather than 'defend and indemnify', which narrows the scope below PB-08's preferred language.",
+        "confidence": "high",
+        "anchor_text": "Provider shall defend Customer against any third-party claim alleging that the Service infringes a patent, copyright or trademark, provided that Customer promptly notifies Provider of the claim and gives Provider sole control of the defence.",
+        "replacement": "Provider shall defend and indemnify Customer against any third-party claim alleging that the Service infringes a third party's intellectual property rights, provided that Customer promptly notifies Provider of the claim and, subject to Customer's right to participate in the defence at its own cost, gives Provider control of the defence.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "9.2",
+        "anchor_text": "Provider shall defend Customer against any third-party claim alleging that the Service infringes a patent, copyright or trademark, provided that Customer promptly notifies Provider of the claim and gives Provider sole control of the defence.",
+        "replacement": "Provider shall defend and indemnify Customer against any third-party claim alleging that the Service infringes a third party's intellectual property rights, provided that Customer promptly notifies Provider of the claim and, subject to Customer's right to participate in the defence at its own cost, gives Provider control of the defence.",
+        "rationale": "The clause conditions the Provider IP indemnity on giving Provider \"sole control\" with no participation right for Customer (PB-08 never_accept), and only obliges Provider to \"defend\" rather than defend and indemnify. The redline adds a Customer participation right at its own cost, changes sole control to control, and aligns the obligation to \"defend and indemnify\" per PB-08 preferred_language.",
+        "located": true,
+        "start": 0,
+        "end": 241,
+        "matched_text": "Provider shall defend Customer against any third-party claim alleging that the Service infringes a patent, copyright or trademark, provided that Customer promptly notifies Provider of the claim and gives Provider sole control of the defence.",
+        "diff": "--- clause 9.2 (original)\n+++ clause 9.2 (proposed)\n@@ -1 +1 @@\n-Provider shall defend Customer against any third-party claim alleging that the Service infringes a patent, copyright or trademark, provided that Customer promptly notifies Provider of the claim and gives Provider sole control of the defence.\n+Provider shall defend and indemnify Customer against any third-party claim alleging that the Service infringes a third party's intellectual property rights, provided that Customer promptly notifies Provider of the claim and, subject to Customer's right to participate in the defence at its own cost, gives Provider control of the defence."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:indemnification",
+          "propose_redline"
+        ],
+        "input_tokens": 8458,
+        "output_tokens": 1726,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 99318,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "10.1",
+        "heading": "Location of Processing",
+        "text": "Customer Data may be stored and processed in any country in which Provider or its subprocessors maintain facilities, including the United States, and Provider shall not be required to notify Customer of any change of location.",
+        "section_path": "10 Data Processing > 10.1 Location of Processing",
+        "refs": [],
+        "char_start": 5399,
+        "char_end": 5627
+      },
+      "verdict": {
+        "clause_id": "10.1",
+        "topic": "data_processing",
+        "verdict": "redline",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-03"
+        ],
+        "rationale": "Clause states that 'Customer Data may be stored and processed in any country in which Provider or its subprocessors maintain facilities, including the United States, and Provider shall not be required to notify Customer of any change of location.' This conflicts with rule PB-03 on three never-accept items: (1) processing in 'any country' at Provider's discretion; (2) no obligation to notify subprocessor or location changes; and (3) no reference to a data processing agreement. The proposed redline aligns the clause with the playbook position: EEA storage/processing as default, transfers outside only with prior written consent and an SCC-based DPA, and 30 days' notice of any new subprocessor or location change during which Customer may object.",
+        "confidence": "high",
+        "anchor_text": "Customer Data may be stored and processed in any country in which Provider or its subprocessors maintain facilities, including the United States, and Provider shall not be required to notify Customer of any change of location.",
+        "replacement": "Customer Data shall be stored and processed within the European Economic Area. Provider shall not transfer Customer Data outside the EEA without Customer's prior written consent and a data processing agreement incorporating the EU standard contractual clauses, and shall give Customer at least thirty (30) days' written notice of any new subprocessor or change of processing location, during which Customer may object.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "10.1",
+        "anchor_text": "Customer Data may be stored and processed in any country in which Provider or its subprocessors maintain facilities, including the United States, and Provider shall not be required to notify Customer of any change of location.",
+        "replacement": "Customer Data shall be stored and processed within the European Economic Area. Provider shall not transfer Customer Data outside the EEA without Customer's prior written consent and a data processing agreement incorporating the EU standard contractual clauses, and shall give Customer at least thirty (30) days' written notice of any new subprocessor or change of processing location, during which Customer may object.",
+        "rationale": "The clause permits storage/processing in \"any country\" at Provider's discretion with no obligation to notify changes and no reference to a DPA — all three are on the never-accept list under rule PB-03. The replacement aligns the clause with the playbook position: EEA processing as default, transfers outside only with consent + SCC-based DPA, and 30 days' notice of subprocessor or location changes with a right to object.",
+        "located": true,
+        "start": 0,
+        "end": 226,
+        "matched_text": "Customer Data may be stored and processed in any country in which Provider or its subprocessors maintain facilities, including the United States, and Provider shall not be required to notify Customer of any change of location.",
+        "diff": "--- clause 10.1 (original)\n+++ clause 10.1 (proposed)\n@@ -1 +1 @@\n-Customer Data may be stored and processed in any country in which Provider or its subprocessors maintain facilities, including the United States, and Provider shall not be required to notify Customer of any change of location.\n+Customer Data shall be stored and processed within the European Economic Area. Provider shall not transfer Customer Data outside the EEA without Customer's prior written consent and a data processing agreement incorporating the EU standard contractual clauses, and shall give Customer at least thirty (30) days' written notice of any new subprocessor or change of processing location, during which Customer may object."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:data_processing",
+          "propose_redline"
+        ],
+        "input_tokens": 8810,
+        "output_tokens": 1719,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 92157,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "10.2",
+        "heading": "Security",
+        "text": "Provider shall maintain administrative, physical and technical safeguards designed to protect the security of Customer Data.",
+        "section_path": "10 Data Processing > 10.2 Security",
+        "refs": [],
+        "char_start": 5640,
+        "char_end": 5767
+      },
+      "verdict": {
+        "clause_id": "10.2",
+        "topic": "data_processing",
+        "verdict": "flag",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "Clause 10.2 states: \"Provider shall maintain administrative, physical and technical safeguards designed to protect the security of Customer Data.\" This is ordinary data-processing boilerplate imposing a reasonable-safeguards obligation on Provider for Customer Data. The playbook rule PB-03 (Data location and DPA) addresses storage/processing location, subprocessor notice, and DPA requirements; none of those are contradicted by this clause, and no never_accept item applies. No cross-references exist that could modify its effect. Acceptable as drafted.",
+        "confidence": "low",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 5,
+        "tool_calls": [
+          "lookup_playbook:data_processing",
+          "lookup_playbook:other",
+          "mark_for_review"
+        ],
+        "input_tokens": 10156,
+        "output_tokens": 1105,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 74194,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "11.1",
+        "heading": "Termination by Provider",
+        "text": "Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer.",
+        "section_path": "11 Termination > 11.1 Termination by Provider",
+        "refs": [],
+        "char_start": 5811,
+        "char_end": 5949
+      },
+      "verdict": {
+        "clause_id": "11.1",
+        "topic": "termination",
+        "verdict": "redline",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-07"
+        ],
+        "rationale": "Clause 11.1 states: 'Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer.' This grants only Provider a unilateral right to terminate or suspend on just 10 days' notice, which conflicts with playbook rule PB-07 requiring either mutual termination rights of at least 60 days' notice, or a fallback of at least 90 days' notice with a pro rata refund. The clause also allows suspension without specifying any conditions or cure period.",
+        "confidence": "high",
+        "anchor_text": "Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer.",
+        "replacement": "Either party may terminate this Agreement for convenience upon sixty (60) days' written notice, in which case Provider shall refund any prepaid Fees for the unexpired part of the Term on a pro rata basis.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "11.1",
+        "anchor_text": "Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer.",
+        "replacement": "Either party may terminate this Agreement for convenience upon sixty (60) days' written notice, in which case Provider shall refund any prepaid Fees for the unexpired part of the Term on a pro rata basis.",
+        "rationale": "The clause grants only Provider a unilateral right to terminate or suspend on 10 days' notice, well below the playbook's 60-day position (PB-07) and its 90-day fallback with pro rata refund. It also allows suspension without specifying any cure period or conditions. Replacing with mutual 60-day convenience termination plus a pro rata refund aligns with PB-07 preferred_language.",
+        "located": true,
+        "start": 0,
+        "end": 136,
+        "matched_text": "Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer.",
+        "diff": "--- clause 11.1 (original)\n+++ clause 11.1 (proposed)\n@@ -1 +1 @@\n-Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer.\n+Either party may terminate this Agreement for convenience upon sixty (60) days' written notice, in which case Provider shall refund any prepaid Fees for the unexpired part of the Term on a pro rata basis."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:termination",
+          "propose_redline"
+        ],
+        "input_tokens": 8257,
+        "output_tokens": 1309,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 71759,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "11.2",
+        "heading": "Termination by Customer",
+        "text": "Customer may terminate this Agreement only at the end of the then-current Term in accordance with Section 4.2.",
+        "section_path": "11 Termination > 11.2 Termination by Customer",
+        "refs": [
+          "4.2"
+        ],
+        "char_start": 5977,
+        "char_end": 6089
+      },
+      "verdict": {
+        "clause_id": "11.2",
+        "topic": "termination",
+        "verdict": "redline",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-07"
+        ],
+        "rationale": "Clause 11.2 states: 'Customer may terminate this Agreement only at the end of the then-current Term in accordance with Section 4.2.' Cross-referenced clause 4.2 requires written non-renewal notice at least 90 days before the end of a 24-month auto-renewing term, so Customer has no mid-term convenience or material-breach termination right and is locked in for up to two years. This conflicts with playbook rule PB-07 (severity high), which requires either both parties may terminate for convenience with equal notice of at least 60 days (with pro rata refund of prepaid Fees) plus a material-breach termination after a 30-day cure period, and lists 'Provider may terminate for convenience on short notice while Customer is locked in for the term' as never_accept. Proposed redline adds (a) convenience termination on 60 days' written notice with pro rata refund of prepaid Fees and (b) material-breach termination after a 30-day cure period, using PB-07's preferred language.",
+        "confidence": "high",
+        "anchor_text": "Customer may terminate this Agreement only at the end of the then-current Term in accordance with Section 4.2.",
+        "replacement": "Customer may terminate this Agreement (a) for convenience upon sixty (60) days' written notice to Provider, in which case Provider shall refund any prepaid Fees for the unexpired part of the Term on a pro rata basis; or (b) if Provider materially breaches this Agreement and fails to cure such breach within thirty (30) days after written notice from Customer.",
+        "consulted_clauses": [
+          "4.2"
+        ]
+      },
+      "redline": {
+        "clause_id": "11.2",
+        "anchor_text": "Customer may terminate this Agreement only at the end of the then-current Term in accordance with Section 4.2.",
+        "replacement": "Customer may terminate this Agreement (a) for convenience upon sixty (60) days' written notice to Provider, in which case Provider shall refund any prepaid Fees for the unexpired part of the Term on a pro rata basis; or (b) if Provider materially breaches this Agreement and fails to cure such breach within thirty (30) days after written notice from Customer.",
+        "rationale": "Per PB-07, convenience termination should be available with at least 60 days' notice (and pro rata refund of prepaid Fees), plus material-breach termination after a 30-day cure period. As drafted, clause 11.2 allows Customer to exit only via non-renewal under Section 4.2, i.e., written notice at least 90 days before the end of a 24-month auto-renewing Term — locking Customer in for up to two years with no mid-term convenience or breach-based exit stated here.",
+        "located": true,
+        "start": 0,
+        "end": 110,
+        "matched_text": "Customer may terminate this Agreement only at the end of the then-current Term in accordance with Section 4.2.",
+        "diff": "--- clause 11.2 (original)\n+++ clause 11.2 (proposed)\n@@ -1 +1 @@\n-Customer may terminate this Agreement only at the end of the then-current Term in accordance with Section 4.2.\n+Customer may terminate this Agreement (a) for convenience upon sixty (60) days' written notice to Provider, in which case Provider shall refund any prepaid Fees for the unexpired part of the Term on a pro rata basis; or (b) if Provider materially breaches this Agreement and fails to cure such breach within thirty (30) days after written notice from Customer."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:termination",
+          "get_clause:4.2",
+          "propose_redline"
+        ],
+        "input_tokens": 8894,
+        "output_tokens": 2762,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 166268,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "11.3",
+        "heading": "Effect of Termination",
+        "text": "Upon termination, Customer's right to access the Service ceases and Provider may delete Customer Data thirty (30) days after the effective date of termination. Customer may export Customer Data during that thirty-day period.",
+        "section_path": "11 Termination > 11.3 Effect of Termination",
+        "refs": [],
+        "char_start": 6115,
+        "char_end": 6342
+      },
+      "verdict": {
+        "clause_id": "11.3",
+        "topic": "termination",
+        "verdict": "flag",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-07"
+        ],
+        "rationale": "The clause provides that 'Customer may export Customer Data during that thirty-day period' before Provider deletes it, satisfying PB-07's position that Customer may export Customer Data for at least 30 days after termination and avoiding the never-accept item of data being deleted immediately on termination. No cross-references exist to check.",
+        "confidence": "low",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 5,
+        "tool_calls": [
+          "lookup_playbook:termination",
+          "lookup_playbook:data_processing",
+          "mark_for_review"
+        ],
+        "input_tokens": 10967,
+        "output_tokens": 1169,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 72054,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "12",
+        "heading": "Exclusions from Limitation of Liability",
+        "text": "The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.",
+        "section_path": "12 Exclusions from Limitation of Liability",
+        "refs": [
+          "2",
+          "6",
+          "8",
+          "9.1",
+          "9.2"
+        ],
+        "char_start": 6385,
+        "char_end": 6759
+      },
+      "verdict": {
+        "clause_id": "12",
+        "topic": "liability_cap",
+        "verdict": "redline",
+        "risk_level": "high",
+        "rule_ids": [
+          "PB-01"
+        ],
+        "rationale": "Clause 12 states: 'The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.' This creates a one-sided carve-out: the cap is removed for Customer's payment, indemnity (Section 9.1), and ordinary breaches of Sections 2 and 6, while expressly preserving the cap for all Provider liabilities including its own indemnity under Section 9.2. This conflicts with playbook rule PB-01 (liability_cap), whose never_accept list includes 'Carve-outs that remove the cap for the Customer's indemnity or ordinary breach while keeping it for the Provider.'",
+        "confidence": "high",
+        "anchor_text": "The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.",
+        "replacement": "The limitations in Section 8 shall not apply to either party's payment obligations, wilful misconduct, gross negligence, or infringement of the other party's intellectual property rights. This limitation applies equally to both parties and to all claims, including indemnification obligations under Sections 9.1 and 9.2.",
+        "consulted_clauses": [
+          "8",
+          "9.1",
+          "9.2"
+        ]
+      },
+      "redline": {
+        "clause_id": "12",
+        "anchor_text": "The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.",
+        "replacement": "The limitations in Section 8 shall not apply to either party's payment obligations, wilful misconduct, gross negligence, or infringement of the other party's intellectual property rights. This limitation applies equally to both parties and to all claims, including indemnification obligations under Sections 9.1 and 9.2.",
+        "rationale": "Clause 12 removes the Section 8 cap for Customer's payment obligations, Customer's indemnity (Section 9.1), and Customer's breaches of Sections 2 and 6, while expressly keeping the cap for all Provider liabilities including its indemnity under Section 9.2. This is a one-sided carve-out that conflicts with PB-01 (never_accept: \"Carve-outs that remove the cap for the Customer's indemnity or ordinary breach while keeping it for the Provider\"). The proposed redline makes the exclusions mutual and limits them to wilful misconduct, gross negligence, IP infringement, and payment obligations, consistent with PB-01 preferred language.",
+        "located": true,
+        "start": 0,
+        "end": 371,
+        "matched_text": "The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.",
+        "diff": "--- clause 12 (original)\n+++ clause 12 (proposed)\n@@ -1 +1 @@\n-The limitations in Section 8 shall not apply to Customer's payment obligations, Customer's indemnification obligations under Section 9.1, or any breach by Customer of Section 2 or Section 6. For the avoidance of doubt, the limitations in Section 8 shall continue to apply to all liabilities of Provider, including Provider's indemnification obligations under Section 9.2.\n+The limitations in Section 8 shall not apply to either party's payment obligations, wilful misconduct, gross negligence, or infringement of the other party's intellectual property rights. This limitation applies equally to both parties and to all claims, including indemnification obligations under Sections 9.1 and 9.2."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:liability_cap",
+          "get_clause:8",
+          "get_clause:9.1",
+          "get_clause:9.2",
+          "propose_redline"
+        ],
+        "input_tokens": 10371,
+        "output_tokens": 2092,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 114803,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "13",
+        "heading": "Modifications to this Agreement",
+        "text": "Provider may modify this Agreement at any time by posting a revised version on its website. Continued use of the Service after posting constitutes acceptance of the revised Agreement.",
+        "section_path": "13 Modifications to this Agreement",
+        "refs": [],
+        "char_start": 6794,
+        "char_end": 6980
+      },
+      "verdict": {
+        "clause_id": "13",
+        "topic": "unilateral_changes",
+        "verdict": "redline",
+        "risk_level": "medium",
+        "rule_ids": [
+          "PB-09"
+        ],
+        "rationale": "Clause 13 states: 'Provider may modify this Agreement at any time by posting a revised version on its website. Continued use of the Service after posting constitutes acceptance of the revised Agreement.' This conflicts with playbook rule PB-09, which requires that amendments be made only in writing signed by both parties. Two never_accept items are triggered: (1) 'Changes by posting on a website' and (2) 'Changes effective on continued use.' A redline has been proposed using the playbook's preferred language to require mutual written signature for amendments and to limit documentation updates to 30 days' notice without material degradation of the Service or Customer's rights.",
+        "confidence": "high",
+        "anchor_text": "Provider may modify this Agreement at any time by posting a revised version on its website. Continued use of the Service after posting constitutes acceptance of the revised Agreement.",
+        "replacement": "This Agreement may be amended only by a written instrument signed by both parties. Provider may update its documentation and acceptable use policy on thirty (30) days' written notice, provided that no such update materially degrades the Service or Customer's rights.",
+        "consulted_clauses": []
+      },
+      "redline": {
+        "clause_id": "13",
+        "anchor_text": "Provider may modify this Agreement at any time by posting a revised version on its website. Continued use of the Service after posting constitutes acceptance of the revised Agreement.",
+        "replacement": "This Agreement may be amended only by a written instrument signed by both parties. Provider may update its documentation and acceptable use policy on thirty (30) days' written notice, provided that no such update materially degrades the Service or Customer's rights.",
+        "rationale": "The clause allows unilateral modification by website posting and deems continued use as acceptance, which conflicts with playbook rule PB-09 position requiring a signed writing for amendments. Both never_accept items apply: \"Changes by posting on a website\" and \"Changes effective on continued use.\" The replacement uses the playbook's preferred language to require mutual written signature and limits documentation updates to 30 days' notice without material degradation.",
+        "located": true,
+        "start": 0,
+        "end": 183,
+        "matched_text": "Provider may modify this Agreement at any time by posting a revised version on its website. Continued use of the Service after posting constitutes acceptance of the revised Agreement.",
+        "diff": "--- clause 13 (original)\n+++ clause 13 (proposed)\n@@ -1 +1 @@\n-Provider may modify this Agreement at any time by posting a revised version on its website. Continued use of the Service after posting constitutes acceptance of the revised Agreement.\n+This Agreement may be amended only by a written instrument signed by both parties. Provider may update its documentation and acceptable use policy on thirty (30) days' written notice, provided that no such update materially degrades the Service or Customer's rights."
+      },
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:unilateral_changes",
+          "propose_redline"
+        ],
+        "input_tokens": 8140,
+        "output_tokens": 1109,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 60241,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "14",
+        "heading": "Governing Law and Disputes",
+        "text": "This Agreement is governed by the laws of Sweden. Any dispute shall be finally settled by the courts of Stockholm, Sweden.",
+        "section_path": "14 Governing Law and Disputes",
+        "refs": [],
+        "char_start": 7010,
+        "char_end": 7135
+      },
+      "verdict": {
+        "clause_id": "14",
+        "topic": "governing_law",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [
+          "PB-10"
+        ],
+        "rationale": "Clause 14 states 'This Agreement is governed by the laws of Sweden. Any dispute shall be finally settled by the courts of Stockholm, Sweden.' This matches rule PB-10's stated position (Swedish law with the courts of Stockholm) and mirrors its preferred_language verbatim. No never_accept conditions apply: there is no mandatory arbitration outside the EU/EEA and no waiver of mandatory consumer or data-protection rights. No cross-references exist to check.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 5,
+        "tool_calls": [
+          "lookup_playbook:governing_law",
+          "lookup_playbook:governing_law",
+          "lookup_playbook:governing_law"
+        ],
+        "input_tokens": 10420,
+        "output_tokens": 743,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 44860,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "15.1",
+        "heading": "Assignment",
+        "text": "Neither party may assign this Agreement without the prior written consent of the other party, not to be unreasonably withheld, except to an affiliate or successor in connection with a merger or sale of substantially all of its assets.",
+        "section_path": "15 General > 15.1 Assignment",
+        "refs": [],
+        "char_start": 7162,
+        "char_end": 7398
+      },
+      "verdict": {
+        "clause_id": "15.1",
+        "topic": "other",
+        "verdict": "accept",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "Clause 15.1 provides: 'Neither party may assign this Agreement without the prior written consent of the other party, not to be unreasonably withheld, except to an affiliate or successor in connection with a merger or sale of substantially all of its assets.' This is standard mutual boilerplate. Assignment is restricted symmetrically for both parties, consent must not be unreasonably withheld (a reasonableness qualifier that protects the Customer), and the carve-out for affiliates/successors applies equally to both sides. No playbook rule governs assignment, and nothing in the clause is one-sided or unusual.",
+        "confidence": "high",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 6,
+        "tool_calls": [
+          "lookup_playbook:other",
+          "lookup_playbook:termination",
+          "lookup_playbook:other",
+          "lookup_playbook:governing_law"
+        ],
+        "input_tokens": 13016,
+        "output_tokens": 1132,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 67776,
+        "stop_reason": "end",
+        "error": null
+      }
+    },
+    {
+      "clause": {
+        "clause_id": "15.2",
+        "heading": "Entire Agreement",
+        "text": "This Agreement, together with the Order Form, constitutes the entire agreement between the parties and supersedes all prior agreements relating to its subject matter.",
+        "section_path": "15 General > 15.2 Entire Agreement",
+        "refs": [],
+        "char_start": 7419,
+        "char_end": 7587
+      },
+      "verdict": {
+        "clause_id": "15.2",
+        "topic": "other",
+        "verdict": "flag",
+        "risk_level": "low",
+        "rule_ids": [],
+        "rationale": "Clause 15.2 provides that 'This Agreement, together with the Order Form, constitutes the entire agreement between the parties and supersedes all prior agreements relating to its subject matter.' This is a standard mutual merger/integration clause: it applies equally to both parties ('between the parties') and appropriately includes the Order Form. No playbook rule governs this topic (topic 'other' has no rules), and nothing in the text is one-sided or unusual, so it falls within ordinary acceptable boilerplate.",
+        "confidence": "low",
+        "anchor_text": null,
+        "replacement": null,
+        "consulted_clauses": []
+      },
+      "redline": null,
+      "trace": {
+        "model": "qwen38",
+        "mode": "local",
+        "prompt_version": "v2",
+        "steps": 4,
+        "tool_calls": [
+          "lookup_playbook:other",
+          "mark_for_review"
+        ],
+        "input_tokens": 7372,
+        "output_tokens": 992,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "latency_ms": 59335,
+        "stop_reason": "end",
+        "error": null
+      }
+    }
+  ]
+}
