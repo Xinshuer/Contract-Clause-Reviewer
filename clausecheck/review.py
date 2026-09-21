@@ -340,6 +340,7 @@ def model_review(backend, contract: Contract, clause: Clause, playbook: Playbook
     verdict.clause_id = clause.clause_id
     if ctx.consulted and not verdict.consulted_clauses:
         verdict.consulted_clauses = ctx.consulted
+    trace.model_verdict = verdict.verdict  # what the model said, before the rule below
     if ctx.marks and verdict.verdict == "accept":
         verdict.verdict, verdict.confidence = "flag", "low"
 
