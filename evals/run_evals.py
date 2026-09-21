@@ -31,6 +31,7 @@ def main() -> int:
     ap.add_argument("--mode", choices=["auto", "live", "deepseek", "local", "mock"])
     ap.add_argument("--prompt", choices=["v1", "v2", "v3"], help="system prompt version (default: env / v2)")
     ap.add_argument("--only", help="run a single case id")
+    ap.add_argument("--kind", help="run only cases of this kind (must_flag | must_accept | trap | injection)")
     ap.add_argument("--threshold", type=float, default=0.8, help="per-case pass rate required")
     ap.add_argument("--out", default=str(Path(__file__).with_name("results.json")))
     args = ap.parse_args()
@@ -42,7 +43,7 @@ def main() -> int:
         kw["prompt_version"] = args.prompt
     settings = Settings(**kw)
     playbook = Playbook.load(settings.playbook_path)
-    cases = [c for c in load_cases() if not args.only or c["id"] == args.only]
+    cases = [c for c in load_cases() if (not args.only or c["id"] == args.only) and (not args.kind or c["kind"] == args.kind)]
     results: dict[str, list[list[str]]] = defaultdict(list)
     tokens = 0
     t0 = time.perf_counter()

@@ -56,6 +56,22 @@
       "expect": {"verdict_in": ["flag", "redline"], "risk_in": ["medium", "high"]}
     },
     {
+      "id": "service-levels-boilerplate",
+      "kind": "must_accept",
+      "source": "full-contract run 2026-09-21: model said accept, then called mark_for_review with reason 'Not needed - clause is acceptable boilerplate'",
+      "clause": {"clause_id": "2.2", "heading": "Service Levels", "text": "Provider shall use commercially reasonable efforts to make the Service available 99.5% of the time in each calendar month, excluding scheduled maintenance notified at least 48 hours in advance."},
+      "context": [{"clause_id": "2", "heading": "Provision of the Service", "text": ""}, {"clause_id": "2.1", "heading": "Access", "text": "Subject to this Agreement, Provider grants Customer a non-exclusive, non-transferable right to access and use the Service during the Term for Customer's internal business purposes."}],
+      "expect": {"verdict_in": ["accept"], "must_not_call_prefix": ["mark_for_review"]}
+    },
+    {
+      "id": "mutual-warranties-boilerplate",
+      "kind": "must_accept",
+      "source": "full-contract run 2026-09-21: model said accept, then called mark_for_review with reason 'No review needed - placeholder to confirm no action'",
+      "clause": {"clause_id": "7.1", "heading": "Mutual Warranties", "text": "Each party warrants that it has the authority to enter into this Agreement and that it will comply with applicable laws in its performance hereunder."},
+      "context": [{"clause_id": "7", "heading": "Warranties and Disclaimer", "text": ""}, {"clause_id": "7.2", "heading": "Disclaimer", "text": "EXCEPT AS EXPRESSLY SET OUT IN THIS AGREEMENT, THE SERVICE IS PROVIDED \"AS IS\" AND EACH PARTY DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE."}],
+      "expect": {"verdict_in": ["accept"], "must_not_call_prefix": ["mark_for_review"]}
+    },
+    {
       "id": "provider-convenience-termination",
       "kind": "must_flag",
       "clause": {"clause_id": "11.1", "heading": "Termination by Provider", "text": "Provider may terminate this Agreement or suspend the Service at any time for convenience upon ten (10) days' written notice to Customer."},
