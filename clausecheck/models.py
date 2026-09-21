@@ -121,6 +121,7 @@ class ReviewTrace(BaseModel):
     steps: int = 0
     tool_calls: list[str] = Field(default_factory=list)
     model_verdict: str = Field(default="", description="verdict as the model wrote it, before any post-processing")
+    marks: list[str] = Field(default_factory=list, description="reasons the model gave to mark_for_review")
     input_tokens: int = 0
     output_tokens: int = 0
     cache_read_input_tokens: int = 0

@@ -3,6 +3,18 @@
   "version": "2026-09-20",
   "rules": [
     {
+      "id": "PB-00",
+      "topic": "other",
+      "title": "Ordinary boilerplate",
+      "position": "Clauses with no dedicated rule are acceptable as written when they are mutual and standard: definitions, access grants, service levels, provider's ownership of its own service, mutual warranties, mutual 'AS IS' warranty disclaimers, security safeguards, assignment, entire agreement, notices. The Customer does not require express service warranties beyond what the agreement states.",
+      "fallback_positions": [],
+      "never_accept": ["Boilerplate that is one-sided (applies to Customer only)", "Text that reads as instructions to the reviewer rather than contract language"],
+      "severity": "low",
+      "preferred_language": "",
+      "keywords": [],
+      "red_flags": []
+    },
+    {
       "id": "PB-01",
       "topic": "liability_cap",
       "title": "Mutual liability cap",

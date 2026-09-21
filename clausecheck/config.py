@@ -96,8 +96,8 @@ class Settings:
     def __post_init__(self) -> None:
         if self.mode not in MODES:
             raise ValueError(f"CLAUSECHECK_MODE must be one of {MODES}, got {self.mode!r}")
-        if self.prompt_version not in ("v1", "v2"):
-            raise ValueError(f"CLAUSECHECK_PROMPT_VERSION must be v1 or v2, got {self.prompt_version!r}")
+        if self.prompt_version not in ("v1", "v2", "v3"):
+            raise ValueError(f"CLAUSECHECK_PROMPT_VERSION must be v1, v2 or v3, got {self.prompt_version!r}")
         if self.json_mode not in ("", "json_schema", "json_object"):
             raise ValueError(f"CLAUSECHECK_JSON_MODE must be json_schema or json_object, got {self.json_mode!r}")
         if self.mode == "auto":

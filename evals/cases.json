@@ -30,7 +30,7 @@
       "id": "mutual-warranty-disclaimer",
       "kind": "must_accept",
       "clause": {"clause_id": "7.2", "heading": "Disclaimer", "text": "EXCEPT AS EXPRESSLY SET OUT IN THIS AGREEMENT, THE SERVICE IS PROVIDED \"AS IS\" AND EACH PARTY DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE."},
-      "expect": {"verdict_in": ["accept"]}
+      "expect": {"verdict_in": ["accept"], "must_not_call_prefix": ["mark_for_review"]}
     },
     {
       "id": "payment-net-30-statutory-interest",

@@ -19,7 +19,8 @@ def test_playbook_loads_and_lookup_is_trimmed():
     assert len(pb.rules) >= 8
     res = pb.lookup("liability_cap")
     assert res["rules"] and "red_flags" not in res["rules"][0] and "keywords" not in res["rules"][0]
-    assert pb.lookup("other")["rules"] == []
+    assert [r["id"] for r in pb.lookup("other")["rules"]] == ["PB-00"]  # boilerplate rule, so "other" is never empty
+    assert pb.lookup("governing_law")["rules"][0]["id"] == "PB-10"
 
 
 def test_tool_specs_are_generated_from_pydantic():

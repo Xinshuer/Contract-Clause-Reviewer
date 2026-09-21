@@ -29,7 +29,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", type=int, default=5)
     ap.add_argument("--mode", choices=["auto", "live", "deepseek", "local", "mock"])
-    ap.add_argument("--prompt", choices=["v1", "v2"], help="system prompt version (default: env / v2)")
+    ap.add_argument("--prompt", choices=["v1", "v2", "v3"], help="system prompt version (default: env / v2)")
     ap.add_argument("--only", help="run a single case id")
     ap.add_argument("--threshold", type=float, default=0.8, help="per-case pass rate required")
     ap.add_argument("--out", default=str(Path(__file__).with_name("results.json")))
