@@ -15,3 +15,4 @@ data/_runner.py
 evals/results*.json
 data/*.log
 !data/sample_contract.local.v2.report.json
+work/
