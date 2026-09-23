@@ -46,8 +46,6 @@ uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 
 `--mode auto` (default) resolves in this order: Anthropic credentials → `live`; `DEEPSEEK_API_KEY` set → `deepseek`; a local OpenAI-compatible server answering → `local`; otherwise `mock`.
 
-**Learning this project?** Start with [learn/README.md](learn/README.md): eight short hands-on lessons on debugging and checking an LLM app, built on this codebase.
-
 ### Four backends, one loop
 
 | Mode | Call path | Structured output | Notes |
@@ -206,8 +204,6 @@ uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 ```
 
 `--mode auto`（默认）的顺序：有 Anthropic 凭据 → live；有 `DEEPSEEK_API_KEY` → deepseek；本地 OpenAI 兼容服务在线 → local；否则 mock。
-
-**第一次上手？** 从 [learn/README.md](learn/README.md) 开始：八节动手小课，讲怎么排错、怎么检查一个 LLM 应用，全部在这个代码库上做。
 
 ### 四种后端，一个循环
 
