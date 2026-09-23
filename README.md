@@ -46,6 +46,8 @@ uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 
 `--mode auto` (default) resolves in this order: Anthropic credentials → `live`; `DEEPSEEK_API_KEY` set → `deepseek`; a local OpenAI-compatible server answering → `local`; otherwise `mock`.
 
+**Learning this project?** [ai-engineer-bootcamp](https://github.com/Xinshuer/ai-engineer-bootcamp) is a 35-day practice course built on this codebase (Python, TypeScript, SQL, cloud, LangChain / LangGraph, in English and Chinese), plus eight hands-on lessons on debugging and checking an LLM app.
+
 ### Four backends, one loop
 
 | Mode | Call path | Structured output | Notes |
@@ -204,6 +206,8 @@ uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 ```
 
 `--mode auto`（默认）的顺序：有 Anthropic 凭据 → live；有 `DEEPSEEK_API_KEY` → deepseek；本地 OpenAI 兼容服务在线 → local；否则 mock。
+
+**第一次上手？** [ai-engineer-bootcamp](https://github.com/Xinshuer/ai-engineer-bootcamp) 是围绕这个代码库的 35 天练习课（Python、TypeScript、SQL、云、LangChain / LangGraph，中英文都有），还有八节动手小课，讲怎么排错、怎么检查一个大模型应用。
 
 ### 四种后端，一个循环
 
