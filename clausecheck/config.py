@@ -4,7 +4,7 @@ Mode:
   auto     - live if Anthropic credentials exist; else deepseek if DEEPSEEK_API_KEY
              is set; else local if an OpenAI-compatible server answers; else mock.
   live     - Anthropic API (claude-opus-5 by default).
-  deepseek - DeepSeek's OpenAI-compatible API (deepseek-chat). Needs DEEPSEEK_API_KEY.
+  deepseek - DeepSeek's OpenAI-compatible API (deepseek-flash). Needs DEEPSEEK_API_KEY.
   local    - OpenAI-compatible local server (LM Studio, llama.cpp server, Ollama).
   mock     - never call a model. Deterministic rule-based reviewer; for tests/UI work.
 
@@ -27,13 +27,18 @@ MODES = ("auto", "live", "deepseek", "local", "mock")
 COMPAT_MODES = ("deepseek", "local")
 
 # USD per million tokens. Anthropic: first-party API, 2026-06 price list.
-# DeepSeek: deepseek-chat list price when this was written; verify at
-# https://api-docs.deepseek.com/quick_start/pricing before quoting a number.
+# DeepSeek: 2026-09 peak list price (off-peak is half; no cache-write premium, so
+# cache_write = input); verify at https://api-docs.deepseek.com/quick_start/pricing
+# before quoting a number. deepseek-chat / deepseek-reasoner were announced as discontinued
+# from 2026-07-24; in 2026-09 they still answer as aliases of deepseek-flash but are no
+# longer listed by /models, so don't rely on them.
 PRICES = {
     "claude-opus-5": {"input": 5.0, "output": 25.0, "cache_write": 6.25, "cache_read": 0.50},
     "claude-sonnet-5": {"input": 2.0, "output": 10.0, "cache_write": 2.50, "cache_read": 0.20},
     "claude-haiku-4-5": {"input": 1.0, "output": 5.0, "cache_write": 1.25, "cache_read": 0.10},
-    "deepseek-chat": {"input": 0.28, "output": 0.42, "cache_write": 0.28, "cache_read": 0.028},
+    "deepseek-flash": {"input": 0.30, "output": 1.20, "cache_write": 0.30, "cache_read": 0.006},
+    "deepseek-v4-flash": {"input": 0.30, "output": 1.20, "cache_write": 0.30, "cache_read": 0.006},
+    "deepseek-v4-pro": {"input": 1.32, "output": 3.96, "cache_write": 1.32, "cache_read": 0.044},
 }
 FREE = {"input": 0.0, "output": 0.0, "cache_write": 0.0, "cache_read": 0.0}
 
@@ -68,7 +73,7 @@ class Settings:
     # --- DeepSeek (OpenAI-compatible, hosted) ---------------------------------
     deepseek_api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", ""))
     deepseek_base_url: str = field(default_factory=lambda: os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1"))
-    deepseek_model: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_DEEPSEEK_MODEL", "deepseek-chat"))
+    deepseek_model: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_DEEPSEEK_MODEL", "deepseek-flash"))
 
     # --- local OpenAI-compatible server ---------------------------------------
     local_base_url: str = field(default_factory=lambda: os.getenv("CLAUSECHECK_LOCAL_BASE_URL", "http://127.0.0.1:1234/v1"))

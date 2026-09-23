@@ -72,14 +72,48 @@ def test_deepseek_mode_resolves_compat_fields(monkeypatch):
 
     monkeypatch.setenv("DEEPSEEK_API_KEY", "sk-test")
     s = Settings(mode="deepseek")
-    assert s.model == "deepseek-chat" and s.compat and s.compat_json_mode == "json_object"
+    assert s.model == "deepseek-flash" and s.compat and s.compat_json_mode == "json_object"
     assert s.compat_base_url.startswith("https://api.deepseek.com") and s.compat_api_key == "sk-test"
-    assert s.full_contract is True and s.price()["cache_read"] < s.price()["input"]
+    assert s.full_contract is True and 0 < s.price()["cache_read"] < s.price()["input"]
+    assert Settings(mode="deepseek", deepseek_model="deepseek-v4-pro").price()["output"] > s.price()["output"]
     monkeypatch.delenv("DEEPSEEK_API_KEY")
     import pytest
 
     with pytest.raises(ValueError):
         Settings(mode="deepseek", deepseek_api_key="")
+
+
+def _compat_request_body(settings) -> dict:
+    """Run one step() against a fake server and return the JSON body it was sent."""
+    from clausecheck.review import OpenAICompatBackend
+
+    sent = {}
+
+    class FakeResponse:
+        status_code = 200
+
+        def json(self):
+            return {"choices": [{"message": {"role": "assistant", "content": "done"}}], "usage": {}}
+
+    class FakeRequests:
+        def post(self, url, json, headers, timeout):
+            sent.update(json)
+            return FakeResponse()
+
+    backend = OpenAICompatBackend(settings, load_contract(ROOT / "data" / "sample_contract.txt"))
+    backend.requests = FakeRequests()
+    backend.step([{"role": "user", "content": "review 8.1"}])
+    return sent
+
+
+def test_deepseek_requests_turn_thinking_off(monkeypatch):
+    # deepseek-flash thinks by default; the review loop does not keep reasoning_content
+    # (the docs require it on tool rounds), so DeepSeek requests ask for no thinking.
+    from clausecheck.config import Settings
+
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "sk-test")
+    assert _compat_request_body(Settings(mode="deepseek"))["thinking"] == {"type": "disabled"}
+    assert "thinking" not in _compat_request_body(Settings(mode="local"))
 
 
 def test_compat_usage_maps_deepseek_cache_fields():

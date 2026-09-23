@@ -220,6 +220,11 @@ class OpenAICompatBackend:
             "max_tokens": self.settings.compat_max_tokens,
             **extra,
         }
+        if self.settings.mode == "deepseek":
+            # deepseek-flash thinks by default (the old deepseek-chat name did not). Thinking
+            # costs ~2.5x the output tokens here, and DeepSeek's docs require every tool round
+            # to send the previous reasoning_content back, which this loop does not keep.
+            body["thinking"] = {"type": "disabled"}
         r = self.requests.post(self.url, json=body, headers=self.headers, timeout=600)
         if r.status_code >= 400:
             raise RuntimeError(f"HTTP {r.status_code} from {self.url}: {r.text[:300]}")

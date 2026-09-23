@@ -53,7 +53,7 @@ uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 | Mode | Call path | Structured output | Notes |
 |---|---|---|---|
 | live | Anthropic SDK, `claude-opus-5`, tools + `output_config.format` | JSON schema enforced server-side | The full contract sits in the system prefix with `cache_control`; reviewing 40 clauses hits the cache 39 times |
-| deepseek | `requests` to DeepSeek's OpenAI-compatible `/v1/chat/completions`, `deepseek-chat` | Tool loop first, then one final call with `response_format: json_object` and the schema in the prompt | Full contract in the system prompt; DeepSeek's automatic prefix cache reports `prompt_cache_hit_tokens`, which the report shows as `cache_read`. Same backend class as `local` |
+| deepseek | `requests` to DeepSeek's OpenAI-compatible `/v1/chat/completions`, `deepseek-flash` with thinking off | Tool loop first, then one final call with `response_format: json_object` and the schema in the prompt | Full contract in the system prompt; DeepSeek's automatic prefix cache reports `prompt_cache_hit_tokens`, which the report shows as `cache_read`. Same backend class as `local` |
 | local | `requests` straight to `/v1/chat/completions` (LM Studio / llama.cpp / Ollama) | Tool loop first, then one final call with `response_format: json_schema` | A JSON grammar and tool calls cannot be on at the same time, so it is two phases. The system prompt carries only a clause index (number + heading); the model fetches text with `get_clause`, which cuts the prompt from ~3k to ~1k tokens. `CLAUSECHECK_FULL_CONTRACT=1` switches to full text |
 | mock | No model; driven by the playbook's `red_flags` regexes | Built directly | Only for exercising the pipeline, tests and UI. Not the product |
 
@@ -214,7 +214,7 @@ uvicorn clausecheck.api:app --reload      # POST /review  (multipart file)
 | 模式 | 调用方式 | 结构化输出 | 备注 |
 |---|---|---|---|
 | live | Anthropic SDK，`claude-opus-5`，tools + `output_config.format` | 服务端强制 JSON schema | 合同全文放在 system 前缀并打 `cache_control`，逐条审查时 39/40 次命中缓存 |
-| deepseek | `requests` 直连 DeepSeek 的 OpenAI 兼容接口，`deepseek-chat` | 先工具循环，最后一次用 `response_format: json_object` + schema 写在 prompt 里 | 合同全文进 system；DeepSeek 自动前缀缓存的 `prompt_cache_hit_tokens` 在报告里显示为 `cache_read`。和 local 共用一个后端类 |
+| deepseek | `requests` 直连 DeepSeek 的 OpenAI 兼容接口，`deepseek-flash`，关闭思考模式 | 先工具循环，最后一次用 `response_format: json_object` + schema 写在 prompt 里 | 合同全文进 system；DeepSeek 自动前缀缓存的 `prompt_cache_hit_tokens` 在报告里显示为 `cache_read`。和 local 共用一个后端类 |
 | local | `requests` 直连 `/v1/chat/completions`（LM Studio / llama.cpp / Ollama） | 先跑工具循环，最后一次调用用 `response_format: json_schema` | JSON 语法约束和 tool call 不能同时开，所以拆成两段。system 里只放条款索引（编号 + 标题），模型用 get_clause 按需取，prompt 从 3k 降到 1k token；`CLAUSECHECK_FULL_CONTRACT=1` 可切回全文 |
 | mock | 不调模型，playbook 里的 `red_flags` 正则驱动 | 直接构造 | 只用于跑通流程、测试、UI；不是产品 |
 
